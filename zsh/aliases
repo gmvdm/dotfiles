@@ -2,10 +2,35 @@
 alias ..='cd ..'
 
 # ls
-alias ls="ls -F"
-alias l="ls -lAh"
-alias ll="ls -l"
+alias ls='ls -FG'
+alias lls='ls -la'
+alias ll='ls -l'
 alias la='ls -A'
+
+alias tf='tail -f'
+alias ips='ifconfig | grep "inet "'
+alias hugs=ghci
+alias cpan='sudo perl -MCPAN -e shell'
+alias ftp='/usr/bin/ftp -i'
+
+alias aq='aquamacs'
+
+alias libtool=/usr/bin/glibtool
+
+alias nslookup='nslookup -sil'
+
+alias l="$PAGER"
+alias lst='last -10'
+
+alias ni='netstat -f inet'
+
+alias tar='gnutar'
+
+alias t=telnet
+alias top='top -u'
+
+# polopoly
+alias pant='/Users/gmwils/polopoly/polopoly/ant/bin/ant'
 
 # git
 alias gl='git pull'
@@ -28,6 +53,16 @@ alias tlog='tail -f log/development.log'
 alias scaffold='script/generate nifty_scaffold'
 alias migrate='rake db:migrate db:test:clone'
 alias rst='touch tmp/restart.txt'
+
+# Bundler (http://ryan.mcgeary.org/2011/02/09/vendor-everything-still-applies/)
+alias b="bundle"
+alias bi="b install --path vendor"
+alias bu="b update"
+alias be="b exec"
+alias binit="bi && b package && echo 'vendor/ruby' >> .gitignore"
+
+# polopoly
+alias tc='tail -f logs/catalina.out' # Tomcat Catalina logs
 
 # commands starting with % for pasting from web
 alias %=' '
