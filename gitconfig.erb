@@ -3,6 +3,17 @@
 	email = <%= print("Your Email: "); STDOUT.flush; STDIN.gets.chomp %>
 [alias]
 	co = checkout
+
+        # I like using the interactive mode to make complex commits
+        ai = add --interactive
+
+        c = commit
+        # commit with a message
+        cm = commit -m
+        cma = commit -a -m
+        # amending the previous commit
+        ca = commit --amend
+        caa = commit -a --amend -C HEAD
 [color]
 	diff = auto
 	status = auto
