@@ -4,13 +4,12 @@ else
   export PS1='%3~$(git_info_for_prompt)%# '
 fi
 
-export RPROMPT='%B%~%b'
-export PROMPT='%n@%m %# '
-
+export FIGNORE=".o:.aux:.out"
 export PAGER=less
 export EDITOR='mate_wait'
 export PATH="$HOME/bin:$HOME/.bin:/usr/local/homebrew/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/usr/local/git/bin:$PATH"
 export MANPATH="/usr/local/man:/usr/local/mysql/man:/usr/local/git/man:$MANPATH"
+export LSCOLORS='Exfxcxdxbxegedabagacad'
 
 fpath=(~/.zsh/functions $fpath)
 
@@ -21,6 +20,9 @@ HISTSIZE=1000
 SAVEHIST=1000
 REPORTTIME=10 # print elapsed time when more than 10 seconds
 
+setopt auto_cd
+cdpath=($HOME/code $HOME/atex)
+
 setopt NO_BG_NICE # don't nice background tasks
 setopt NO_HUP
 setopt NO_LIST_BEEP
@@ -30,7 +32,7 @@ setopt HIST_VERIFY
 setopt SHARE_HISTORY # share history between sessions ???
 setopt EXTENDED_HISTORY # add timestamps to history
 setopt PROMPT_SUBST
-setopt CORRECT
+# setopt CORRECT
 setopt COMPLETE_IN_WORD
 # setopt IGNORE_EOF
 
@@ -81,4 +83,13 @@ if [ ! -S $SSH_AUTH_SOCK ]
 then
 	ssh-agent > $HOME/.ssh/agent
 	source $HOME/.ssh/agent >& /dev/null
+fi
+
+if [[ -n $EMACS ]]; then
+  export PROMPT='%~ %# '
+  export RPROMPT=''
+  unsetopt zle
+else
+  export RPROMPT='%B%~%b'
+  export PROMPT='%n@%m %# '
 fi
