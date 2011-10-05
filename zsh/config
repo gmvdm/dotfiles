@@ -1,8 +1,8 @@
-if [[ -n $SSH_CONNECTION ]]; then
-  export PS1='%m:%3~$(git_info_for_prompt)%# '
-else
-  export PS1='%3~$(git_info_for_prompt)%# '
-fi
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export PS1='%m:%3~$(git_info_for_prompt)%# '
+# else
+#   export PS1='%3~$(git_info_for_prompt)%# '
+# fi
 
 export FIGNORE=".o:.aux:.out"
 export PAGER=less
@@ -20,8 +20,8 @@ HISTSIZE=1000
 SAVEHIST=1000
 REPORTTIME=10 # print elapsed time when more than 10 seconds
 
-setopt auto_cd
-cdpath=($HOME/code $HOME/atex)
+setopt auto_cd # automatically tab complete into cdpath dirs
+cdpath=($HOME/code)
 
 setopt NO_BG_NICE # don't nice background tasks
 setopt NO_HUP
@@ -91,5 +91,5 @@ if [[ -n $EMACS ]]; then
   unsetopt zle
 else
   export RPROMPT='%B%~%b'
-  export PROMPT='%n@%m %# '
+  export PROMPT='%n@%m $(git_info_for_prompt)%# '
 fi
