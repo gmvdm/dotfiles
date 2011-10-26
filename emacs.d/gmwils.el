@@ -1,6 +1,8 @@
 (require 'textmate)
 (textmate-mode)
 
+(require 'beamer-templates)
+
 ;; TODO move to relevant location
 (defun browse-url-default-macosx-browser (url &optional new-window)
   (interactive (browse-url-interactive-arg "URL: "))
@@ -15,7 +17,7 @@
     (set-face-font 'default "-apple-PanicSans-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1"))
 
 (require 'color-theme)
-(load-file "~/.emacs.d/color-theme-railscasts.el")
+(load-file "~/.emacs.d/gmwils/color-theme-railscasts.el")
 (color-theme-railscasts)
 
 ; Set default file encoding to utf-8 (http://nakkaya.com/2009/11/29/emacs-and-international-characters/)
