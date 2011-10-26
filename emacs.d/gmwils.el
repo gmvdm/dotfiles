@@ -20,6 +20,19 @@
 (load-file "~/.emacs.d/gmwils/color-theme-railscasts.el")
 (color-theme-railscasts)
 
+(defun writeroom ()
+  "Switches to a WriteRoom-like fullscreen style"
+  (interactive)	
+  (when (featurep 'aquamacs)
+    ;; switch to white on black
+    (color-theme-initialize)
+    (color-theme-clarity)
+    ;; switch to Garamond 36pt
+    (aquamacs-autoface-mode 0)
+    (set-frame-font "-apple-garamond-medium-r-normal--36-360-72-72-m-360-iso10646-1")
+    ;; switch to fullscreen mode
+    (aquamacs-toggle-full-frame)))
+
 ; Set default file encoding to utf-8 (http://nakkaya.com/2009/11/29/emacs-and-international-characters/)
 (setq locale-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
