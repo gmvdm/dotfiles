@@ -7,7 +7,7 @@
 (setq inhibit-startup-message t)
 
 (setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "safari"
+      browse-url-generic-program "open"
       marmalade-server "http://marmalade-repo.org/"
       custom-file (expand-file-name "~/.emacs.d/custom.el")
       ido-handle-duplicate-virtual-buffers 2)
@@ -26,7 +26,7 @@
 
 (defvar my-packages '(clojure-mode clojure-test-mode
                       markdown-mode yaml-mode tuareg
-		      textmate color-theme magit
+		      textmate color-theme magit deft
                       marmalade oddmuse scpaste))
 (dolist (p my-packages)
   (when (not (package-installed-p p))
