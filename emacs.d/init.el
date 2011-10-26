@@ -7,10 +7,9 @@
 (setq inhibit-startup-message t)
 
 (setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "conkeror"
+      browse-url-generic-program "safari"
       marmalade-server "http://marmalade-repo.org/"
       custom-file (expand-file-name "~/.emacs.d/custom.el")
-      ispell-extra-args '("--keyboard=dvorak")
       ido-handle-duplicate-virtual-buffers 2)
 
 ;; Setup packages
@@ -27,6 +26,7 @@
 
 (defvar my-packages '(clojure-mode clojure-test-mode
                       markdown-mode yaml-mode tuareg
+		      textmate color-theme magit
                       marmalade oddmuse scpaste))
 (dolist (p my-packages)
   (when (not (package-installed-p p))
