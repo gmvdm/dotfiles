@@ -13,6 +13,7 @@ alias hugs=ghci
 alias cpan='sudo perl -MCPAN -e shell'
 alias ftp='/usr/bin/ftp -i'
 
+alias e='emacs'
 alias aq='aquamacs'
 
 alias libtool=/usr/bin/glibtool
