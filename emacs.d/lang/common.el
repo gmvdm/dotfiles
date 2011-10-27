@@ -1,6 +1,6 @@
 ;;;; common.el - things used by all languages
 
-
+;; Ensure we're using UTF8 as a default
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
