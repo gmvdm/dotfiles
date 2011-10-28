@@ -6,6 +6,9 @@
 (prefer-coding-system 'utf-8)
 (ansi-color-for-comint-mode-on)
 
+;; Transparently open compressed files
+(auto-compression-mode t)
+
 ;; Highlight matching parentheses when the point is on them.
 (show-paren-mode 1)
 
@@ -47,5 +50,7 @@
 ;; Default to unified diffs
 (setq diff-switches "-u -w")
 
+;; make emacs use the clipboard
+(setq x-select-enable-clipboard t)
 
 (provide 'common)
