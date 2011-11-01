@@ -17,6 +17,9 @@
 (load-file (expand-file-name "~/.emacs.d/package-23.el"))
 (require 'package)
 
+(setq package-archives '(("ELPA" . "http://tromey.com/elpa/") 
+                         ("gnu" . "http://elpa.gnu.org/packages/")))
+
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
@@ -27,7 +30,8 @@
 (defvar my-packages '(clojure-mode clojure-test-mode
                       markdown-mode yaml-mode tuareg
 		      textmate color-theme magit deft
-		      paredit
+		      paredit python-mode 
+		      ;; ruby-mode inf-ruby
                       marmalade oddmuse scpaste))
 (dolist (p my-packages)
   (when (not (package-installed-p p))
