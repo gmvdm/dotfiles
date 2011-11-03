@@ -13,8 +13,8 @@
       ido-handle-duplicate-virtual-buffers 2)
 
 ;; Setup packages
-;; TODO - don't load in emacs 24 from file
-(load-file (expand-file-name "~/.emacs.d/package-23.el"))
+(when (< emacs-major-version 24)
+  (load-file (expand-file-name "~/.emacs.d/package-23.el")))
 (require 'package)
 
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/") 
