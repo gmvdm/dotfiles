@@ -32,6 +32,7 @@
 		      textmate color-theme magit deft
 		      paredit python-mode 
 		      ;; ruby-mode inf-ruby
+                      php-mode
                       marmalade oddmuse scpaste))
 (dolist (p my-packages)
   (when (not (package-installed-p p))
