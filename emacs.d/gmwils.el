@@ -36,9 +36,9 @@
 ;; Deft setup - http://jblevins.org/projects/deft/
 (when (require 'deft nil 'noerror) 
   (setq
-   deft-extension "md"
+   deft-extension "org"
    deft-directory "~/Dropbox/Notes/"
-   deft-text-mode 'markdown-mode))
+   deft-text-mode 'org-mode))
 
 ; Set default file encoding to utf-8 (http://nakkaya.com/2009/11/29/emacs-and-international-characters/)
 (setq locale-coding-system 'utf-8)
