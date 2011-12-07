@@ -1,6 +1,8 @@
 (require 'textmate)
 (textmate-mode)
 
+(global-smart-tab-mode 1)
+
 (require 'beamer-templates)
 
 ;; TODO move to relevant location
