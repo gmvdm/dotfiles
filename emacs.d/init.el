@@ -31,8 +31,10 @@
                       markdown-mode yaml-mode tuareg
 		      textmate color-theme magit deft
 		      paredit python-mode 
+		      haskell-mode
 		      ;; ruby-mode inf-ruby
                       php-mode
+                      smart-tab
                       marmalade oddmuse scpaste))
 (dolist (p my-packages)
   (when (not (package-installed-p p))
