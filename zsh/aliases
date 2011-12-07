@@ -16,6 +16,8 @@ alias ftp='/usr/bin/ftp -i'
 alias e='emacs'
 alias aq='aquamacs'
 
+alias nt=nosetests
+
 alias libtool=/usr/bin/glibtool
 
 alias nslookup='nslookup -sil'
