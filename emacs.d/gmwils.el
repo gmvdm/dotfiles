@@ -5,6 +5,10 @@
 
 (require 'beamer-templates)
 
+(add-to-list 'auto-mode-alist '("\\.doc$" . doc-mode))
+(add-to-list 'auto-mode-alist '("\\.asciidoc$" . doc-mode))
+
+
 ;; TODO move to relevant location
 (defun browse-url-default-macosx-browser (url &optional new-window)
   (interactive (browse-url-interactive-arg "URL: "))
