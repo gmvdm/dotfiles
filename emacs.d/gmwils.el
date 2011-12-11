@@ -5,6 +5,10 @@
 
 (require 'beamer-templates)
 
+(add-to-list 'auto-mode-alist '("\\.doc$" . doc-mode))
+(add-to-list 'auto-mode-alist '("\\.asciidoc$" . doc-mode))
+
+
 ;; TODO move to relevant location
 (defun browse-url-default-macosx-browser (url &optional new-window)
   (interactive (browse-url-interactive-arg "URL: "))
@@ -38,9 +42,9 @@
 ;; Deft setup - http://jblevins.org/projects/deft/
 (when (require 'deft nil 'noerror) 
   (setq
-   deft-extension "md"
+   deft-extension "org"
    deft-directory "~/Dropbox/Notes/"
-   deft-text-mode 'markdown-mode))
+   deft-text-mode 'org-mode))
 
 ; Set default file encoding to utf-8 (http://nakkaya.com/2009/11/29/emacs-and-international-characters/)
 (setq locale-coding-system 'utf-8)

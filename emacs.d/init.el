@@ -34,7 +34,7 @@
 		      haskell-mode
 		      ;; ruby-mode inf-ruby
                       php-mode
-                      smart-tab
+                      smart-tab protobuf-mode
                       marmalade oddmuse scpaste))
 (dolist (p my-packages)
   (when (not (package-installed-p p))
