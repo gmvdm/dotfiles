@@ -47,14 +47,20 @@
 (setq system-specific-config (concat dotfiles-dir system-name ".el")
       user-specific-config (concat dotfiles-dir user-login-name ".el")
       user-specific-dir (concat dotfiles-dir user-login-name)
-      lang-specific-dir (concat dotfiles-dir "lang"))
+      lang-specific-dir (concat dotfiles-dir "lang")
+      common-dir (concat dotfiles-dir "common"))
 (add-to-list 'load-path user-specific-dir)
 (add-to-list 'load-path lang-specific-dir)
+(add-to-list 'load-path common-dir)
 
 (if (file-exists-p system-specific-config) (load system-specific-config))
 (if (file-exists-p user-specific-config) (load user-specific-config))
+
 (if (file-exists-p user-specific-dir)
-  (mapc #'load (directory-files user-specific-dir nil ".*el$")))
+    (mapc #'load (directory-files user-specific-dir nil ".*el$")))
 
 (if (file-exists-p lang-specific-dir)
-  (mapc #'load (directory-files lang-specific-dir nil ".*el$")))
+    (mapc #'load (directory-files lang-specific-dir nil ".*el$")))
+
+(if (file-exists-p common-dir)
+    (mapc #'load (directory-files common-dir nil ".*el$")))
