@@ -1,0 +1,3 @@
+--pager=less -R
+--type-add=ruby=.haml,.rake,.rsel
+--ignore_dir=node_modules
