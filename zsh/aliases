@@ -28,13 +28,7 @@ alias lst='last -10'
 
 alias ni='netstat -f inet'
 
-alias tar='gnutar'
-
 alias t=telnet
-alias top='top -u'
-
-# polopoly
-alias pant='/Users/gmwils/polopoly/polopoly/ant/bin/ant'
 
 # git
 alias gl='git pull'
