@@ -1,6 +1,11 @@
 (require 'textmate)
 (textmate-mode)
 
+;; show trailing whitespace
+(setq-default show-trailing-whitespace t)
+
+(global-set-key "\C-c\C-w" 'whitespace-cleanup)
+
 (global-smart-tab-mode 1)
 
 (require 'beamer-templates)
