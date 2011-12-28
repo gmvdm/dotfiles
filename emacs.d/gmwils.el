@@ -1,6 +1,9 @@
 (require 'textmate)
 (textmate-mode)
 
+(require 'puppet-mode)
+(add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
+
 ;; show trailing whitespace
 (setq-default show-trailing-whitespace t)
 
