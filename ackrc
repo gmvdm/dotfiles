@@ -1,3 +1,4 @@
 --pager=less -R
 --type-add=ruby=.haml,.rake,.rsel
 --ignore-dir=node_modules
+--ignore-dir=build
