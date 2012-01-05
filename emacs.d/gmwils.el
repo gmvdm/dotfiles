@@ -1,6 +1,8 @@
 (require 'textmate)
 (textmate-mode)
 
+(require 'protobuf-mode)
+(require 'thrift-mode)
 (require 'puppet-mode)
 (add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
 
