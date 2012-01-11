@@ -13,11 +13,11 @@
 
 (define-abbrev-table 'puppet-mode-abbrev-table ())
 
-(defcustom puppet-indent-level 2
+(defcustom puppet-indent-level 4
   "*Indentation of Puppet statements."
   :type 'integer :group 'puppet)
 
-(defcustom puppet-include-indent 2
+(defcustom puppet-include-indent 4
   "*Indentation of continued Puppet include statements."
   :type 'integer :group 'puppet)
 

@@ -1,6 +1,7 @@
 (require 'textmate)
 (textmate-mode)
 
+(require 'clojurescript-mode)
 (require 'protobuf-mode)
 (require 'thrift-mode)
 (require 'puppet-mode)
