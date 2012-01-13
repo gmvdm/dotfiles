@@ -1,10 +1,10 @@
 [user]
-	name = <%= print("Your Name: "); STDOUT.flush; STDIN.gets.chomp %>
-	email = <%= print("Your Email: "); STDOUT.flush; STDIN.gets.chomp %>
+    name = <%= print("Your Name: "); STDOUT.flush; STDIN.gets.chomp %>
+    email = <%= print("Your Email: "); STDOUT.flush; STDIN.gets.chomp %>
 [alias]
-	co = checkout
+    co = checkout
 
-    # I like using the interactive mode to make complex commits
+    # interactive mode to make complex commits
     ai = add --interactive
 
     c = commit
@@ -24,7 +24,7 @@
     rh = reset --hard
     rh1 = reset HEAD^ --hard
     rh1 = reset HEAD^^ --hard
-    
+
     # shortcuts for commands
     s = status
     d = diff
@@ -37,22 +37,22 @@
     p = push
 
 [color]
-	diff = auto
-	status = auto
-	branch = auto
+    diff = auto
+    status = auto
+    branch = auto
 [core]
-	excludesfile = <%= ENV['HOME'] %>/.gitignore
-	editor = emacs
-	autocrlf = input
-	safecrlf = true
+    excludesfile = <%= ENV['HOME'] %>/.gitignore
+    editor = emacs
+    autocrlf = input
+    safecrlf = true
 [apply]
-	whitespace = nowarn
-[format]
-	pretty = %C(yellow)%h%Creset %s %C(red)(%an, %cr)%Creset
+    whitespace = nowarn
+#[format]
+#    pretty = %C(yellow)%h%Creset %s %C(red)(%an, %cr)%Creset
 [github]
-	user = <%= print("GitHub Username: "); STDOUT.flush; STDIN.gets.chomp %>
-	token = <%= print("GitHub API Token: "); STDOUT.flush; STDIN.gets.chomp %>
+    user = <%= print("GitHub Username: "); STDOUT.flush; STDIN.gets.chomp %>
+    token = <%= print("GitHub API Token: "); STDOUT.flush; STDIN.gets.chomp %>
 [branch]
-	autosetuprebase = always
+    autosetuprebase = always
 [push]
-	default = tracking
+    default = tracking
