@@ -11,6 +11,18 @@ export PATH="$HOME/bin:$HOME/.bin:/usr/local/homebrew/bin:/usr/local/bin:/usr/lo
 export MANPATH="/usr/local/man:/usr/local/mysql/man:/usr/local/git/man:$MANPATH"
 export LSCOLORS='Exfxcxdxbxegedabagacad'
 
+# Less config
+export LESSCLOSE=''
+export LESSOPEN='|pygmentize -f terminal256 -O style=monokai %s'
+
+export LESS_TERMCAP_mb=$'\E[01;34m'
+export LESS_TERMCAP_md=$'\E[01;34m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+
 fpath=(~/.zsh/functions $fpath)
 
 autoload -U ~/.zsh/functions/*(:t)
@@ -49,32 +61,32 @@ bindkey '^[[5D' beginning-of-line
 bindkey '^[[5C' end-of-line
 bindkey '^[[3~' delete-char
 bindkey '^[^N' newtab
-bindkey '^?' backward-delete-char 
+bindkey '^?' backward-delete-char
 
 
 # Set the title of the xterm (or Terminal window).
 # Defaults to the hostname
 settitle() {
 	if [ $# -eq 0 ]
-	then  
+	then
 		echo -n "]2;`hostname`"
 	else
 		echo -n "]2;$@"
 	fi
 }
 
-# Set the window title if ssh is executed. Reset the title on logout to 
+# Set the window title if ssh is executed. Reset the title on logout to
 # hostname. Fails to reset if ssh aborted.
 ssh() {
 	TRAPEXIT() { settitle "`hostname`" }
-	settitle "$@[$#]" 
+	settitle "$@[$#]"
 	/usr/bin/ssh "$@"
 }
 
 # Setup ssh-agent
 if [ ! -f $HOME/.ssh/agent ]
 then
-	ssh-agent > $HOME/.ssh/agent 
+	ssh-agent > $HOME/.ssh/agent
 fi
 
 source $HOME/.ssh/agent >& /dev/null
