@@ -2,6 +2,8 @@
 (textmate-mode)
 
 (require 'clojurescript-mode)
+(setq inferior-lisp-program "browser-repl")
+
 (require 'protobuf-mode)
 (require 'thrift-mode)
 (require 'puppet-mode)
