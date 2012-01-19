@@ -12,8 +12,8 @@ export MANPATH="/usr/local/man:/usr/local/mysql/man:/usr/local/git/man:$MANPATH"
 export LSCOLORS='Exfxcxdxbxegedabagacad'
 
 # Less config
-export LESSCLOSE=''
-export LESSOPEN='|pygmentize -f terminal256 -O style=monokai %s'
+# export LESSCLOSE=''
+# export LESSOPEN='|pygmentize -f terminal256 -O style=monokai %s'
 
 export LESS_TERMCAP_mb=$'\E[01;34m'
 export LESS_TERMCAP_md=$'\E[01;34m'
