@@ -17,7 +17,7 @@
   (load-file (expand-file-name "~/.emacs.d/package-23.el")))
 (require 'package)
 
-(setq package-archives '(("ELPA" . "http://tromey.com/elpa/") 
+(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")))
 
 (add-to-list 'package-archives
@@ -30,7 +30,7 @@
 (defvar my-packages '(clojure-mode clojure-test-mode
                       markdown-mode yaml-mode tuareg
 		      textmate color-theme magit deft
-		      paredit python-mode 
+		      paredit python-mode
 		      haskell-mode
 		      ;; ruby-mode inf-ruby
                       php-mode
@@ -40,6 +40,7 @@
   (when (not (package-installed-p p))
     (package-install p)))
 
+;; (setq temporary-file-directory "~/.emacs.d/tmp/")
 
 ;; You can keep system- or user-specific customizations here
 (setq dotfiles-dir (file-name-directory

@@ -39,21 +39,8 @@
 (load-file "~/.emacs.d/gmwils/color-theme-railscasts.el")
 (color-theme-railscasts)
 
-(defun writeroom ()
-  "Switches to a WriteRoom-like fullscreen style"
-  (interactive)	
-  (when (featurep 'aquamacs)
-    ;; switch to white on black
-    (color-theme-initialize)
-    (color-theme-clarity)
-    ;; switch to Garamond 36pt
-    (aquamacs-autoface-mode 0)
-    (set-frame-font "-apple-garamond-medium-r-normal--36-360-72-72-m-360-iso10646-1")
-    ;; switch to fullscreen mode
-    (aquamacs-toggle-full-frame)))
-
 ;; Deft setup - http://jblevins.org/projects/deft/
-(when (require 'deft nil 'noerror) 
+(when (require 'deft nil 'noerror)
   (setq
    deft-extension "org"
    deft-directory "~/Dropbox/Notes/"
@@ -65,5 +52,14 @@
 (set-keyboard-coding-system 'utf-8)
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
+
+;; Flymake setup
+(require 'flymake)
+(add-hook 'find-file-hook 'flymake-find-file-hook) ;; Auto enable flymake
+(setq flymake-run-in-place nil)
+(setq flymake-start-syntax-check-on-newline nil)
+(custom-set-faces
+ '(flymake-errline ((((class color)) (:underline "red"))))
+ '(flymake-warnline ((((class color)) (:underline "yellow")))))
 
 (load-file "~/.emacs.d/custom-keys.el")
