@@ -54,6 +54,8 @@
 (add-to-list 'load-path lang-specific-dir)
 (add-to-list 'load-path common-dir)
 
+(require 'flymake)
+
 (if (file-exists-p system-specific-config) (load system-specific-config))
 (if (file-exists-p user-specific-config) (load user-specific-config))
 
