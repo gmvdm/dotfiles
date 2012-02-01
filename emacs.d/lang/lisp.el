@@ -34,4 +34,7 @@
                                                (match-end 1) "ƒ")
                                nil))))))
 
+(require 'clojurescript-mode)
+(setq inferior-lisp-program "browser-repl")
+
 (provide 'lisp)

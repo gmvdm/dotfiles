@@ -1,9 +1,6 @@
 (require 'textmate)
 (textmate-mode)
 
-(require 'clojurescript-mode)
-(setq inferior-lisp-program "browser-repl")
-
 (require 'protobuf-mode)
 (require 'thrift-mode)
 (require 'puppet-mode)
@@ -52,14 +49,5 @@
 (set-keyboard-coding-system 'utf-8)
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
-
-;; Flymake setup
-(require 'flymake)
-(add-hook 'find-file-hook 'flymake-find-file-hook) ;; Auto enable flymake
-(setq flymake-run-in-place nil)
-(setq flymake-start-syntax-check-on-newline nil)
-(custom-set-faces
- '(flymake-errline ((((class color)) (:underline "red"))))
- '(flymake-warnline ((((class color)) (:underline "yellow")))))
 
 (load-file "~/.emacs.d/custom-keys.el")
