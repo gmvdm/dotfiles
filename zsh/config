@@ -75,12 +75,14 @@ settitle() {
 	fi
 }
 
+export SSH_CMD='/usr/bin/ssh'
+
 # Set the window title if ssh is executed. Reset the title on logout to
 # hostname. Fails to reset if ssh aborted.
 ssh() {
 	TRAPEXIT() { settitle "`hostname`" }
 	settitle "$@[$#]"
-	/usr/bin/ssh "$@"
+        $SSH_CMD "$@"
 }
 
 # Setup ssh-agent
