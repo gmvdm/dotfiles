@@ -8,6 +8,8 @@
 (add-to-list 'flymake-allowed-file-name-masks
              '(".*\\.cpp\\'" flymake-cpplint-init))
 (add-to-list 'flymake-allowed-file-name-masks
+             '(".*\\.cc\\'" flymake-cpplint-init))
+(add-to-list 'flymake-allowed-file-name-masks
              '(".*\\.h\\'" flymake-cpplint-init))
 
 (provide 'c-style)

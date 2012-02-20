@@ -1,3 +1,15 @@
+;; show trailing whitespace
+(setq-default show-trailing-whitespace t)
+(global-set-key "\C-c\C-w" 'whitespace-cleanup)
+(global-smart-tab-mode 1)
+
+;; Tramp mode - http://www.gnu.org/software/tramp/#Connection-types
+(setq tramp-default-method "scpx")
+
+(add-to-list 'auto-mode-alist '("\\.doc$" . doc-mode))
+(add-to-list 'auto-mode-alist '("\\.asciidoc$" . doc-mode))
+
+
 (require 'textmate)
 (textmate-mode)
 
@@ -6,18 +18,7 @@
 (require 'puppet-mode)
 (add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
 
-;; show trailing whitespace
-(setq-default show-trailing-whitespace t)
-
-(global-set-key "\C-c\C-w" 'whitespace-cleanup)
-
-(global-smart-tab-mode 1)
-
 (require 'beamer-templates)
-
-(add-to-list 'auto-mode-alist '("\\.doc$" . doc-mode))
-(add-to-list 'auto-mode-alist '("\\.asciidoc$" . doc-mode))
-
 
 ;; TODO move to relevant location
 (defun browse-url-default-macosx-browser (url &optional new-window)
