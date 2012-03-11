@@ -9,7 +9,6 @@
 (add-to-list 'auto-mode-alist '("\\.doc$" . doc-mode))
 (add-to-list 'auto-mode-alist '("\\.asciidoc$" . doc-mode))
 
-
 (require 'textmate)
 (textmate-mode)
 
