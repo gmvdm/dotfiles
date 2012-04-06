@@ -23,8 +23,14 @@
             ;; (dired-omit-mode 1)
             ))
 
+(setq debug-on-error t)
+
 (require 'textmate)
 (textmate-mode)
+
+;; Haskell
+;; (autoload 'ghc-init "ghc" nil t)
+;; (add-hook 'haskell-mode-hook (lambda () (ghc-init) (flymake-mode)))
 
 (require 'protobuf-mode)
 (require 'thrift-mode)
