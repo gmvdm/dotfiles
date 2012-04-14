@@ -9,6 +9,10 @@
 (add-to-list 'auto-mode-alist '("\\.doc$" . doc-mode))
 (add-to-list 'auto-mode-alist '("\\.asciidoc$" . doc-mode))
 
+;; Setup for Workgroups (https://github.com/tlh/workgroups.el)
+(require 'workgroups)
+(setq wg-prefix-key (kbd "C-c w"))
+
 ;; Advanced dired
 (add-hook 'dired-load-hook
           (lambda ()
@@ -39,7 +43,7 @@
   (if (and new-window (>= emacs-major-version 23))
       (ns-do-applescript
        (format (concat "tell application \"Safari\" to make document with properties {URL:\"%s\"}\n"
-		       "tell application \"Safari\" to activate") url))
+                       "tell application \"Safari\" to activate") url))
     (start-process (concat "open " url) nil "open" url)))
 
 ;; Appearance
