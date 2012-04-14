@@ -12,6 +12,7 @@
 ;; Setup for Workgroups (https://github.com/tlh/workgroups.el)
 (require 'workgroups)
 (setq wg-prefix-key (kbd "C-c w"))
+(wg-load "~/.emacs.d/workgroups")
 
 ;; Advanced dired
 (add-hook 'dired-load-hook
