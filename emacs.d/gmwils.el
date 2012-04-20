@@ -63,6 +63,10 @@
    deft-directory "~/Dropbox/Notes/"
    deft-text-mode 'org-mode))
 
+;; Smarter buffer names
+;; (require 'uniquify)
+;; (setq uniquify-buffer-name-style (quote post-forward))
+
 ; Set default file encoding to utf-8 (http://nakkaya.com/2009/11/29/emacs-and-international-characters/)
 (setq locale-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)

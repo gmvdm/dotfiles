@@ -31,7 +31,8 @@
                       markdown-mode yaml-mode tuareg
 		      textmate color-theme magit deft
 		      paredit python-mode
-		      haskell-mode
+		      haskell-mode go-mode
+                      js2-mode
 		      ;; ruby-mode inf-ruby
                       php-mode
                       smart-tab protobuf-mode
@@ -57,13 +58,14 @@
 (require 'flymake)
 
 (if (file-exists-p system-specific-config) (load system-specific-config))
-(if (file-exists-p user-specific-config) (load user-specific-config))
 
-(if (file-exists-p user-specific-dir)
-    (mapc #'load (directory-files user-specific-dir nil ".*el$")))
+(if (file-exists-p common-dir)
+    (mapc #'load (directory-files common-dir nil ".*el$")))
 
 (if (file-exists-p lang-specific-dir)
     (mapc #'load (directory-files lang-specific-dir nil ".*el$")))
 
-(if (file-exists-p common-dir)
-    (mapc #'load (directory-files common-dir nil ".*el$")))
+(if (file-exists-p user-specific-dir)
+    (mapc #'load (directory-files user-specific-dir nil ".*el$")))
+
+(if (file-exists-p user-specific-config) (load user-specific-config))
