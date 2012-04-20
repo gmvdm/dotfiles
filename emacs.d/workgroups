@@ -1,0 +1,1 @@
+(workgroups ((type . workgroup) (uid . 0) (name . "test") (wconfig (type . wconfig) (left . 3) (top . 22) (width . 150) (height . 50) (sbars . right) (sbwid . 15) (wtree (type . window) (edges 0 0 154 49) (bname . "untitled") (fname) (point . :max) (mark) (markx) (wstart . 1) (hscroll . 0) (sbars 15 2 t nil) (margins nil) (fringes 4 12 nil) (selwin . t) (mbswin)))))

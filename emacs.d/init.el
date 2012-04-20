@@ -35,6 +35,7 @@
                       js2-mode
 		      ;; ruby-mode inf-ruby
                       php-mode
+                      workgroups
                       smart-tab protobuf-mode
                       marmalade oddmuse scpaste))
 (dolist (p my-packages)
