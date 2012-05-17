@@ -30,6 +30,8 @@
 
 (setq debug-on-error t)
 
+(require 'yaml-mode)
+
 (require 'textmate)
 (textmate-mode)
 
