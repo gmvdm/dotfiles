@@ -34,7 +34,7 @@
 		      haskell-mode go-mode
                       js2-mode
 		      ;; ruby-mode inf-ruby
-                      php-mode
+		      scala-mode php-mode
                       workgroups
                       smart-tab protobuf-mode
                       marmalade oddmuse scpaste))
