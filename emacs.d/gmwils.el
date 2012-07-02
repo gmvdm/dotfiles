@@ -35,6 +35,9 @@
 (require 'textmate)
 (textmate-mode)
 
+;; Hive / Hadoop
+(add-to-list 'auto-mode-alist '("\\.hql$" . sql-mode))
+
 ;; Haskell
 ;; (autoload 'ghc-init "ghc" nil t)
 ;; (add-hook 'haskell-mode-hook (lambda () (ghc-init) (flymake-mode)))
