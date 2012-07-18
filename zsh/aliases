@@ -30,6 +30,9 @@ alias ni='netstat -f inet'
 
 alias t=telnet
 
+# tags
+alias runtags='find . -name '\''*.cc'\'' -or -name '\''*.cc'\'' | xargs etags --lang=c++'
+
 # git
 alias gl='git log --stat'
 alias gd='git diff'
