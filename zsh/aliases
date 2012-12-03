@@ -35,11 +35,16 @@ alias runtags='find . -name '\''*.cc'\'' -or -name '\''*.cc'\'' | xargs etags --
 
 # git
 alias gl='git log --stat'
+alias gt='git log --abbrev-commit --abbrev=4 --pretty=oneline --graph --color=auto --decorate=short'
 alias gd='git diff'
 alias gc='git commit'
 alias gca='git commit -a'
 alias gs='git status'
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
+alias gittop='git shortlog -s | sort -nr'
+alias gemail='git config user.email'
+# git config user.email 'gmwils@gmail.com'
+# git config --global user.email
 
 # rails
 alias sc='script/console'
