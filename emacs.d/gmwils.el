@@ -73,6 +73,11 @@
    deft-directory "~/Dropbox/Notes/"
    deft-text-mode 'org-mode))
 
+;; Save point position between sessions
+(require 'saveplace)
+(setq-default save-place t)
+(setq save-place-file (expand-file-name ".places" user-emacs-directory))
+
 ;; Smarter buffer names
 ;; (require 'uniquify)
 ;; (setq uniquify-buffer-name-style (quote post-forward))
