@@ -65,6 +65,8 @@
 ;; Don't clutter up directories with files~
 (setq backup-directory-alist `(("." . ,(expand-file-name
                                         (concat dotfiles-dir "backups")))))
+;; Make backups of files, even when they're in version control
+(setq vc-make-backup-files t)
 
 ;; NodeJS settings
 (require 'sws-mode)
