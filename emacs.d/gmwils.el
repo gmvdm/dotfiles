@@ -73,10 +73,36 @@
    deft-directory "~/Dropbox/Notes/"
    deft-text-mode 'org-mode))
 
+
+;; full screen magit-status
+;; http://whattheemacsd.com/setup-magit.el-01.html
+(when (require 'magit nil 'noerror)
+  (defadvice magit-status (around magit-fullscreen activate)
+    (window-configuration-to-register :magit-fullscreen)
+    ad-do-it
+    (delete-other-windows))
+
+  (defun magit-quit-session ()
+    "Restores the previous window configuration and kills the magit buffer"
+    (interactive)
+    (kill-buffer)
+    (jump-to-register :magit-fullscreen))
+
+  (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
+
 ;; Save point position between sessions
 (require 'saveplace)
 (setq-default save-place t)
 (setq save-place-file (expand-file-name ".places" user-emacs-directory))
+
+;; Setup an edit server
+;; Used by Chrome plugin: http://www.emacswiki.org/emacs/Google_Chrome
+(when (and (window-system) (require 'edit-server nil t))
+  (setq edit-server-new-frame nil)
+  (edit-server-start)
+  (setq edit-server-url-major-mode-alist
+        '(("github\\.com" . markdown-mode)
+          ("mail\\.google\\.com" . html-mode))))
 
 ;; Smarter buffer names
 ;; (require 'uniquify)
