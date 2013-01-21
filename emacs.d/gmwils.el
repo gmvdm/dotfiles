@@ -104,6 +104,44 @@
         '(("github\\.com" . markdown-mode)
           ("mail\\.google\\.com" . html-mode))))
 
+;; Allow for easy use of new lines
+(defun open-line-below ()
+  (interactive)
+  (end-of-line)
+  (newline)
+  (indent-for-tab-command))
+
+(defun open-line-above ()
+  (interactive)
+  (beginning-of-line)
+  (newline)
+  (forward-line -1)
+  (indent-for-tab-command))
+
+(global-set-key (kbd "<C-return>") 'open-line-below)
+(global-set-key (kbd "<C-S-return>") 'open-line-above)
+
+;; Shuffle lines
+(defun move-line-down ()
+  (interactive)
+  (let ((col (current-column)))
+    (save-excursion
+      (forward-line)
+      (transpose-lines 1))
+    (forward-line)
+    (move-to-column col)))
+
+(defun move-line-up ()
+  (interactive)
+  (let ((col (current-column)))
+    (save-excursion
+      (forward-line)
+      (transpose-lines -1))
+    (move-to-column col)))
+
+(global-set-key (kbd "<C-S-down>") 'move-line-down)
+(global-set-key (kbd "<C-S-up>") 'move-line-up)
+
 ;; Smarter buffer names
 ;; (require 'uniquify)
 ;; (setq uniquify-buffer-name-style (quote post-forward))
