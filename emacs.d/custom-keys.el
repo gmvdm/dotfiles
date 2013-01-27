@@ -20,7 +20,13 @@
                   (join-line -1)))
 
 
+  ;; Cycle between windows - https://github.com/garybernhardt/dotfiles/blob/master/.emacs
   (global-set-key (kbd "C-o") 'other-window)
+  (defun prev-window ()
+    (interactive)
+    (other-window -1))
+  (global-set-key "\M-o" 'prev-window)
+
   ;; Help should search more than just commands
   (global-set-key (kbd "C-h a") 'apropos)
 

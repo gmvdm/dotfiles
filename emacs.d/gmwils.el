@@ -3,6 +3,9 @@
 (global-set-key "\C-c\C-w" 'whitespace-cleanup)
 (global-smart-tab-mode 1)
 
+; don't open new frames when opening files in aquamacs
+(setq one-buffer-one-frame-mode nil)
+
 ;; Tramp mode - http://www.gnu.org/software/tramp/#Connection-types
 (setq tramp-default-method "scpx")
 
