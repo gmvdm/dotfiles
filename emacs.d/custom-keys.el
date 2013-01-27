@@ -19,6 +19,8 @@
                   (interactive)
                   (join-line -1)))
 
+
+  (global-set-key (kbd "C-o") 'other-window)
   ;; Help should search more than just commands
   (global-set-key (kbd "C-h a") 'apropos)
 
