@@ -14,6 +14,10 @@
 
   ;; M-S-6 is awkward
   (global-set-key (kbd "C-c q") 'join-line)
+  (global-set-key (kbd "M-j")
+            (lambda ()
+                  (interactive)
+                  (join-line -1)))
 
   ;; Help should search more than just commands
   (global-set-key (kbd "C-h a") 'apropos)
