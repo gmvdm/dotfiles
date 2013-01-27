@@ -3,6 +3,12 @@
 (global-set-key "\C-c\C-w" 'whitespace-cleanup)
 (global-smart-tab-mode 1)
 
+;; Setup the scratch file
+(setq initial-scratch-message "")
+(setq aquamacs-scratch-file nil
+      initial-major-mode 'lisp-interaction-mode)
+
+
 ; don't open new frames when opening files in aquamacs
 (setq one-buffer-one-frame-mode nil)
 
