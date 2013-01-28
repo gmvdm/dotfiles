@@ -1,3 +1,5 @@
+# -*- sh -*-
+
 # cd
 alias ,='cd ..'
 
@@ -35,7 +37,7 @@ alias runtags='find . -name '\''*.cc'\'' -or -name '\''*.cc'\'' | xargs etags --
 
 # git
 alias gl='git log --stat'
-alias gt='git log --abbrev-commit --abbrev=4 --pretty=oneline --graph --color=auto --decorate=short'
+alias gt='git log --abbrev-commit --abbrev=7 --pretty=oneline --graph --color=auto --decorate=short'
 alias gd='git diff'
 alias gc='git commit'
 alias gca='git commit -a'
