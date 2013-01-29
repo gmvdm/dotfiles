@@ -8,7 +8,6 @@
 (setq aquamacs-scratch-file nil
       initial-major-mode 'lisp-interaction-mode)
 
-
 ; don't open new frames when opening files in aquamacs
 (setq one-buffer-one-frame-mode nil)
 
@@ -72,7 +71,8 @@
     (set-face-font 'default "-apple-PanicSans-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1"))
 
 (require 'color-theme)
-(require 'color-theme-railscasts)
+;; (require 'color-theme-railscasts)
+(require 'color-theme-ir-black)
 
 ;; Always fill at 78 chars
 (add-hook 'text-mode-hook #'turn-on-auto-fill)

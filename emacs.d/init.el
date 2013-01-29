@@ -34,6 +34,7 @@
 		      haskell-mode go-mode
                       js2-mode
                       color-theme-railscasts
+                      color-theme-ir-black
 		      ;; ruby-mode inf-ruby
 		      scala-mode php-mode
                       workgroups
