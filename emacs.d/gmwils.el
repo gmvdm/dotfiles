@@ -72,8 +72,11 @@
     (set-face-font 'default "-apple-PanicSans-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1"))
 
 (require 'color-theme)
-(load-file "~/.emacs.d/gmwils/color-theme-railscasts.el")
-(color-theme-railscasts)
+(require 'color-theme-railscasts)
+
+;; Always fill at 78 chars
+(add-hook 'text-mode-hook #'turn-on-auto-fill)
+(setq-default fill-column 78)
 
 ;; Deft setup - http://jblevins.org/projects/deft/
 (when (require 'deft nil 'noerror)

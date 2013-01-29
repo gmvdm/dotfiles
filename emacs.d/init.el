@@ -33,6 +33,7 @@
 		      paredit python-mode
 		      haskell-mode go-mode
                       js2-mode
+                      color-theme-railscasts
 		      ;; ruby-mode inf-ruby
 		      scala-mode php-mode
                       workgroups
