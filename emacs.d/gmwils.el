@@ -116,6 +116,13 @@
         '(("github\\.com" . markdown-mode)
           ("mail\\.google\\.com" . html-mode))))
 
+;; Auto Save files to temp dir
+;; http://emacswiki.org/emacs/AutoSave
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
 ;; Allow for easy use of new lines
 (defun open-line-below ()
   (interactive)
