@@ -30,7 +30,10 @@
   ;; Help should search more than just commands
   (global-set-key (kbd "C-h a") 'apropos)
 
+  ;; Remap textmate mappings
   (global-set-key (kbd "C-t") 'textmate-goto-file)
+  (global-set-key (kbd "C-x f") 'textmate-goto-file)
+  (global-set-key (kbd "C-x /") 'comment-or-uncomment-region-or-line)
 
   (global-set-key (kbd "C-x m") 'magit-status)
   (global-set-key (kbd "M-s")   'fixup-whitespace)
