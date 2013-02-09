@@ -28,9 +28,13 @@
 
 (defun run-test-from-file (f)
   "given a file, run tests on it"
-  (let ((base-dir (textmate-find-project-root)))
+  (let ((base-dir (textmate-find-project-root))
+        (virtenv (file-name-nondirectory (getenv "VIRTUAL_ENV"))))
     (if (and (not (eq f nil)) (file-readable-p f))
-        (shell-command (concat "PYTHONPATH=" base-dir " py.test " f))
+        (shell-command (concat "("
+                               "cd " base-dir "; "
+                               "source ~/.virtualenvs/" virtenv "/bin/activate; "
+                               "PYTHONPATH=\"" base-dir ";$PYTHONPATH\" py.test " f ")"))
         (message "Unable to run test for file %s" f))))
 
 (defun run-test ()
