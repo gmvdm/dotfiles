@@ -1,0 +1,31 @@
+[user]
+    name = Geoff Wilson
+    email = gmwils@gmail.com
+
+[color]
+    ui = auto
+
+[alias]
+    st = status
+    di = diff
+    dc = diff --cached
+    b = branch
+
+    a = add
+    aa = add --all
+
+    pom = push origin master
+
+    co = checkout
+
+    # interactive mode to make complex commits
+    ai = add --interactive
+
+    c = commit
+    cm = commit -m
+    cma = commit -a -m
+    ca = commit --amend
+
+    ls = log --stat
+    last = log -1 --stat
+    l = "!. ~/.githelpers && pretty_git_log"
