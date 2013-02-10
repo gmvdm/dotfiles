@@ -1,19 +1,11 @@
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export PS1='%m:%3~$(git_info_for_prompt)%# '
-# else
-#   export PS1='%3~$(git_info_for_prompt)%# '
-# fi
+# -*- sh -*-
 
 export FIGNORE=".o:.aux:.out"
 export PAGER=less
-export EDITOR='mate_wait'
+export EDITOR=emacs
 export PATH="$HOME/bin:$HOME/.bin:/usr/local/homebrew/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/usr/local/git/bin:$PATH"
 export MANPATH="/usr/local/man:/usr/local/mysql/man:/usr/local/git/man:$MANPATH"
 export LSCOLORS='Exfxcxdxbxegedabagacad'
-
-# Less config
-# export LESSCLOSE=''
-# export LESSOPEN='|pygmentize -f terminal256 -O style=monokai %s'
 
 export LESS_TERMCAP_mb=$'\E[01;34m'
 export LESS_TERMCAP_md=$'\E[01;34m'
@@ -24,7 +16,6 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
 fpath=(~/.zsh/functions $fpath)
-
 autoload -U ~/.zsh/functions/*(:t)
 
 HISTFILE=~/.zsh_history
@@ -40,50 +31,11 @@ setopt NO_HUP
 setopt NO_LIST_BEEP
 setopt LOCAL_OPTIONS # allow functions to have local options
 setopt LOCAL_TRAPS # allow functions to have local traps
-setopt HIST_VERIFY
-# setopt SHARE_HISTORY # share history between sessions ???
-setopt EXTENDED_HISTORY # add timestamps to history
 setopt PROMPT_SUBST
-# setopt CORRECT
 setopt COMPLETE_IN_WORD
-# setopt IGNORE_EOF
-
 setopt APPEND_HISTORY # adds history
-# setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share it across sessions
-setopt HIST_IGNORE_ALL_DUPS  # don't record dupes in history
-setopt HIST_REDUCE_BLANKS
 
 zle -N newtab
-
-bindkey '^[^[[D' backward-word
-bindkey '^[^[[C' forward-word
-bindkey '^[[5D' beginning-of-line
-bindkey '^[[5C' end-of-line
-bindkey '^[[3~' delete-char
-bindkey '^[^N' newtab
-bindkey '^?' backward-delete-char
-
-
-# Set the title of the xterm (or Terminal window).
-# Defaults to the hostname
-settitle() {
-	if [ $# -eq 0 ]
-	then
-		echo -n "]2;`hostname`"
-	else
-		echo -n "]2;$@"
-	fi
-}
-
-export SSH_CMD='/usr/bin/ssh'
-
-# Set the window title if ssh is executed. Reset the title on logout to
-# hostname. Fails to reset if ssh aborted.
-ssh() {
-	TRAPEXIT() { settitle "`hostname`" }
-	settitle "$@[$#]"
-        $SSH_CMD "$@"
-}
 
 # Setup ssh-agent
 if [ ! -f $HOME/.ssh/agent ]
