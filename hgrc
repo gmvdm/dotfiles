@@ -1,0 +1,13 @@
+[ui]
+username=Geoff Wilson <gmwils@gmail.com>
+ignore=$HOME/.hgignore_global
+
+[extensions]
+graphlog =
+
+[alias]
+l = log --style=$HOME/.hg/slog.style
+ls = log --style=$HOME/.hg/nlog.style
+lg = glog --style=$HOME/.hg/sglog.style
+
+
