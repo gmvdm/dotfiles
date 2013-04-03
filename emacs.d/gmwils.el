@@ -55,8 +55,6 @@
 (require 'puppet-mode)
 (add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
 
-(require 'beamer-templates)
-
 ;; TODO move to relevant location
 (defun browse-url-default-macosx-browser (url &optional new-window)
   (interactive (browse-url-interactive-arg "URL: "))
