@@ -10,4 +10,6 @@ l = log --style=$HOME/.hg/slog.style
 ls = log --style=$HOME/.hg/nlog.style
 lg = glog --style=$HOME/.hg/sglog.style
 
+[diff]
+git = True
 
