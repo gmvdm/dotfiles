@@ -36,6 +36,9 @@
 
   (global-set-key (kbd "C-x m") 'magit-status)
   (global-set-key (kbd "M-s")   'fixup-whitespace)
+
+  ;; Toggle auto-fill
+  (global-set-key (kbd "C-c q") 'auto-fill-mode)
 )
 
 ;; Open tabs in Aquamacs
