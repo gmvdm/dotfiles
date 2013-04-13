@@ -35,6 +35,7 @@
                       js2-mode
                       color-theme-railscasts
                       color-theme-ir-black
+                      yasnippet
 		      ;; ruby-mode inf-ruby
 		      scala-mode php-mode
                       workgroups

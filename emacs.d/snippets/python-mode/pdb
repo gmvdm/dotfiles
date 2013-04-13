@@ -1,0 +1,5 @@
+# name: pdb
+# key: pdb
+# --
+import pdb; pdb.set_trace()
+$0

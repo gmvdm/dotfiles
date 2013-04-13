@@ -3,6 +3,9 @@
 (global-set-key "\C-c\C-w" 'whitespace-cleanup)
 (global-smart-tab-mode 1)
 
+;; Setup Yasnippet - http://github.com/capitaomorte/yasnippet
+(yas-global-mode 1)
+
 ;; Setup the scratch file
 (setq initial-scratch-message "")
 (setq aquamacs-scratch-file nil

@@ -1,0 +1,5 @@
+# key: defm
+# name: defm
+# --
+def ${1:name}(self, $2):
+    $0
