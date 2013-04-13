@@ -1,6 +1,5 @@
 ;;;; lisp.el Lisp specific configuration
 
-
 (define-key read-expression-map (kbd "TAB") 'lisp-complete-symbol)
 (define-key lisp-mode-shared-map (kbd "C-c l") "lambda")
 (define-key lisp-mode-shared-map (kbd "RET") 'reindent-then-newline-and-indent)
@@ -36,5 +35,10 @@
 
 (require 'clojurescript-mode)
 (setq inferior-lisp-program "browser-repl")
+
+;; Turn on eldoc - http://emacswiki.org/emacs/ElDoc
+(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
 
 (provide 'lisp)
