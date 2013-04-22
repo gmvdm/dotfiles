@@ -39,6 +39,13 @@
             ;; (dired-omit-mode 1)
             ))
 
+(defun conditionally-enable-paredit-mode ()
+  "Enable `paredit-mode' in the minibuffer, during `eval-expression'."
+  (if (eq this-command 'eval-expression)
+      (paredit-mode 1)))
+
+(add-hook 'minibuffer-setup-hook 'conditionally-enable-paredit-mode)
+
 (setq debug-on-error t)
 
 (require 'yaml-mode)
@@ -116,6 +123,17 @@
   (setq edit-server-url-major-mode-alist
         '(("github\\.com" . markdown-mode)
           ("mail\\.google\\.com" . html-mode))))
+
+;; http://emacsredux.com/blog/2013/03/27/copy-filename-to-the-clipboard/
+(defun copy-file-name-to-clipboard ()
+  "Copy the current buffer file name to the clipboard."
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (kill-new filename)
+      (message "Copied buffer file name '%s' to the clipboard." filename))))
 
 ;; Auto Save files to temp dir
 ;; http://emacswiki.org/emacs/AutoSave
