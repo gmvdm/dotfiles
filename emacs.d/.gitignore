@@ -22,3 +22,4 @@ abbrev_defs
 elpa
 swank
 .places
+.yas-compiled-snippets.el

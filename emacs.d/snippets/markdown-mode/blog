@@ -1,0 +1,10 @@
+# key: blog
+# name: Pelican blog entry
+# --
+Title: $1
+Date: $2
+Author: gmwils
+Summary: $3
+status: draft
+
+$0
