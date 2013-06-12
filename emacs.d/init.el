@@ -36,6 +36,7 @@
                       color-theme-railscasts
                       color-theme-ir-black
                       yasnippet
+                      ess
 		      ;; ruby-mode inf-ruby
 		      scala-mode php-mode
                       workgroups

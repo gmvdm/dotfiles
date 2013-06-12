@@ -6,6 +6,8 @@
 ;; Setup Yasnippet - http://github.com/capitaomorte/yasnippet
 (yas-global-mode 1)
 
+(require 'ess)
+
 ;; Setup the scratch file
 (setq initial-scratch-message "")
 (setq aquamacs-scratch-file nil
@@ -93,6 +95,16 @@
    deft-directory "~/Dropbox/Notes/"
    deft-text-mode 'org-mode))
 
+;; Setup org-babel
+;; http://orgmode.org/org.html#Languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (R . t)
+   (ruby . t)
+   (sh . t)
+   (python . t)
+   (js . t)))
 
 ;; full screen magit-status
 ;; http://whattheemacsd.com/setup-magit.el-01.html
