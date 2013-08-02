@@ -48,6 +48,7 @@ alias gittop='git shortlog -s | sort -nr'
 alias gemail='git config user.email'
 # git config user.email 'gmwils@gmail.com'
 # git config --global user.email
+alias churn="git log --name-only | grep '\.py' | sort | uniq -c | sort -nr | head"
 
 # rails
 alias sc='script/console'
