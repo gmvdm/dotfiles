@@ -106,6 +106,12 @@
    (python . t)
    (js . t)))
 
+;; dash-at-point
+;; https://github.com/stanaka/dash-at-point#readme
+(autoload 'dash-at-point "dash-at-point"
+  "Search the word at point with Dash." t nil)
+(global-set-key "\C-cd" 'dash-at-point)
+
 ;; full screen magit-status
 ;; http://whattheemacsd.com/setup-magit.el-01.html
 (when (require 'magit nil 'noerror)

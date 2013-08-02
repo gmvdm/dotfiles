@@ -15,15 +15,13 @@
 ;; Setup packages
 (when (< emacs-major-version 24)
   (load-file (expand-file-name "~/.emacs.d/package-23.el")))
+
 (require 'package)
-
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
-                         ("gnu" . "http://elpa.gnu.org/packages/")))
-
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
+                         ("gnu" . "http://elpa.gnu.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")))
 (package-initialize)
-
 (when (not package-archive-contents)
   (package-refresh-contents))
 
