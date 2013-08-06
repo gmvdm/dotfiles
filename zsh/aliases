@@ -67,8 +67,8 @@ alias bu="b update"
 alias be="b exec"
 alias binit="bi && b package && echo 'vendor/ruby' >> .gitignore"
 
-# polopoly
-alias tc='tail -f logs/catalina.out' # Tomcat Catalina logs
+# iOS
+alias ios="open /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app"
 
 # commands starting with % for pasting from web
 alias %=' '
