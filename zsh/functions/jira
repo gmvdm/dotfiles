@@ -1,0 +1,8 @@
+default_jira_project=INCIDENT
+jira_host='jira.spotify.net'
+local arg="$1"
+
+if test -z "${arg/[0-9]*/}"; then
+  arg="$default_jira_project-$arg"
+fi
+open "https://$jira_host/browse/$arg";
