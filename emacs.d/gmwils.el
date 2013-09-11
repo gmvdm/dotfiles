@@ -62,6 +62,13 @@
 ;; (autoload 'ghc-init "ghc" nil t)
 ;; (add-hook 'haskell-mode-hook (lambda () (ghc-init) (flymake-mode)))
 
+;; Setup Flycheck - https://github.com/flycheck/flycheck
+(condition-case nil
+    (progn
+      (require 'flycheck)
+      (add-hook 'after-init-hook #'global-flycheck-mode))
+     (file-error (message "Flycheck not available; not configuring")))
+
 (require 'protobuf-mode)
 (require 'thrift-mode)
 (require 'puppet-mode)
