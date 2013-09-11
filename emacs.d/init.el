@@ -1,5 +1,10 @@
-(require 'cl)
+;;; init --- initialise emacs config
+;;; Commentary:
+;;;  - general settings, package management, and load for other areas
+;;;
+;;; Code:
 
+(require 'cl)
 ;; Turn off mouse interface early in startup to avoid momentary display
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -58,8 +63,6 @@
 (add-to-list 'load-path lang-specific-dir)
 (add-to-list 'load-path common-dir)
 
-(require 'flymake)
-
 (if (file-exists-p system-specific-config) (load system-specific-config))
 
 (if (file-exists-p common-dir)
@@ -72,3 +75,6 @@
     (mapc #'load (directory-files user-specific-dir nil ".*el$")))
 
 (if (file-exists-p user-specific-config) (load user-specific-config))
+
+(provide 'init)
+;;; init.el ends here

@@ -12,40 +12,6 @@
 ;; Highlight matching parentheses when the point is on them.
 (show-paren-mode 1)
 
-;; Flymake setup
-(require 'flymake)
-(add-hook 'find-file-hook 'flymake-find-file-hook) ;; Auto enable flymake
-(setq flymake-run-in-place nil)
-(setq flymake-start-syntax-check-on-newline nil)
-; on osx, the flymake gui warning dialog sometimes freezes emacs
-(setq flymake-gui-warnings-enabled nil)
-; bind some useful keys
-(global-set-key [f6] 'flymake-display-err-menu-for-current-line)
-(global-set-key "\C-ce" 'flymake-display-err-menu-for-current-line)
-(global-set-key "\C-cn" 'flymake-goto-next-error)
-(global-set-key "\C-cp" 'flymake-goto-prev-error)
-(custom-set-faces
- '(flymake-errline ((((class color)) (:underline "red"))))
- '(flymake-warnline ((((class color)) (:underline "yellow")))))
-
-(defun show-fly-err-at-point ()
-  "If the cursor is sitting on a flymake error, display the
-  message in the minibuffer"
-  (interactive)
-  (let ((line-no (line-number-at-pos)))
-    (dolist (elem flymake-err-info)
-      (if (eq (car elem) line-no)
-	  (let ((err (car (second elem))))
-	    (message "%s" (flymake-ler-text err)))))))
-
-(defadvice flymake-goto-next-error (after display-message activate compile)
-  "Display the error in the mini-buffer rather than having to mouse over it"
-  (show-fly-err-at-point))
-
-(defadvice flymake-goto-prev-error (after display-message activate compile)
-  "Display the error in the mini-buffer rather than having to mouse over it"
-  (show-fly-err-at-point))
-
 ;; ido-mode is like magic pixie dust!
 (when (> emacs-major-version 21)
   (ido-mode t)
