@@ -15,7 +15,7 @@ alias hugs=ghci
 alias cpan='sudo perl -MCPAN -e shell'
 alias ftp='/usr/bin/ftp -i'
 
-alias e='emacs'
+alias e='emacsclient -a ""'
 alias de="emacs --eval '(deft)'"
 alias aq='aquamacs'
 
