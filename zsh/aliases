@@ -16,8 +16,7 @@ alias cpan='sudo perl -MCPAN -e shell'
 alias ftp='/usr/bin/ftp -i'
 
 alias e='emacsclient -a ""'
-alias de="emacs --eval '(deft)'"
-alias aq='aquamacs'
+alias de='emacsclient -t --eval '\''(deft)'\'
 
 alias nt=nosetests
 alias ntv='nosetests -v'
