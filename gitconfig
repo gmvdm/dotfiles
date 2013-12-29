@@ -1,5 +1,5 @@
 [user]
-    name = Geoff Wilson
+    name = Geoff van der Meer
 
 [color]
     ui = auto
@@ -28,3 +28,5 @@
     ls = log --stat
     last = log -1 --stat
     l = "!. ~/.githelpers && pretty_git_log"
+[push]
+	default = simple
