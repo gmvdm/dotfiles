@@ -15,7 +15,9 @@ alias hugs=ghci
 alias cpan='sudo perl -MCPAN -e shell'
 alias ftp='/usr/bin/ftp -i'
 
+# emacs
 alias e='emacsclient -a ""'
+alias en='emacsclient -a "" -n'
 alias de='emacsclient -t --eval '\''(deft)'\'
 
 alias nt=nosetests
@@ -36,7 +38,7 @@ alias t=telnet
 alias runtags='find . -name '\''*.cc'\'' -or -name '\''*.cc'\'' | xargs etags --lang=c++'
 
 # git
-alias gl='git log --stat'
+alias gl='git log --stat --no-merges'
 alias gt='git log --abbrev-commit --abbrev=7 --pretty=oneline --graph --color=auto --decorate=short'
 alias gd='git diff'
 alias gc='git commit'
