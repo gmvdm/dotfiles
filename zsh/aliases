@@ -71,5 +71,7 @@ alias binit="bi && b package && echo 'vendor/ruby' >> .gitignore"
 # iOS
 alias ios="open /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app"
 
+alias ppjson="python -m json.tool"
+
 # commands starting with % for pasting from web
 alias %=' '
