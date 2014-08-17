@@ -7,12 +7,14 @@
 ;; show trailing whitespace
 (setq-default show-trailing-whitespace t)
 (global-set-key "\C-c\C-w" 'whitespace-cleanup)
+
+(require 'smart-tab)
 (global-smart-tab-mode 1)
 
 ;; Setup Yasnippet - http://github.com/capitaomorte/yasnippet
 (yas-global-mode 1)
 
-(require 'ess)
+(require 'ess-site)
 
 ;; Setup the scratch file
 ;; See: http://emacsredux.com/blog/2014/07/25/configure-the-scratch-buffers-mode/
