@@ -30,3 +30,5 @@
     l = "!. ~/.githelpers && pretty_git_log"
 [push]
 	default = simple
+[hub]
+	host = ghe.spotify.net
