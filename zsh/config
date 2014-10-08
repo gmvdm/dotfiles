@@ -35,6 +35,9 @@ setopt PROMPT_SUBST
 setopt COMPLETE_IN_WORD
 setopt APPEND_HISTORY # adds history
 
+bindkey "\eOA" up-line-or-history
+bindkey "\eOB" down-line-or-history
+
 zle -N newtab
 
 # Setup ssh-agent

@@ -1,5 +1,8 @@
 . ~/.zsh/aliases
 
+bind '"\e[A":history-search-backward'
+bind '"\e[B":history-search-forward'
+
 # changing directory to code project
 function c { cd ~/code/$1; }
 
