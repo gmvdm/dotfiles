@@ -1,0 +1,43 @@
+#!/bin/bash
+# Installation:
+# 1. Save this script to /some/bin/ssh-background
+# 2. chmod 755 /some/bin/ssh-background
+# 3. alias ssh=/some/bin/ssh-background
+# 4. Configure your host colors below.
+
+set_color() {
+  local HEX_FG=$1
+  local HEX_BG=$2
+  local OPACITY=$3
+
+  local FG_R=`echo $HEX_FG | sed 's/../0x&,/g' | awk -F "," '{printf("%d",$1 * 257)}'`
+  local FG_G=`echo $HEX_FG | sed 's/../0x&,/g' | awk -F "," '{printf("%d",$2 * 257)}'`
+  local FG_B=`echo $HEX_FG | sed 's/../0x&,/g' | awk -F "," '{printf("%d",$3 * 257)}'`
+  local BG_R=`echo $HEX_BG | sed 's/../0x&,/g' | awk -F "," '{printf("%d",$1 * 257)}'`
+  local BG_G=`echo $HEX_BG | sed 's/../0x&,/g' | awk -F "," '{printf("%d",$2 * 257)}'`
+  local BG_B=`echo $HEX_BG | sed 's/../0x&,/g' | awk -F "," '{printf("%d",$3 * 257)}'`
+
+  /usr/bin/osascript <<EOF
+tell application "iTerm"
+   tell current session of current terminal
+      set foreground color to {$FG_R, $FG_G, $FG_B}
+      set background color to {$BG_R, $BG_G, $BG_B}
+      set transparency to "$OPACITY"
+   end tell
+end tell
+EOF
+}
+
+if [[ "$@" =~ 'lon.spotify.net' ]]; then
+   set_color ffffff 220000 0
+elif [[ "$@" =~ 'ash.spotify.net' ]]; then
+   set_color ffffff 220000 0
+elif [[ "$@" =~ 'sto.spotify.net' ]]; then
+   set_color ffffff 220000 0
+elif [[ "$@" =~ 'testing.d.spotify.net' ]]; then
+   set_color aaaaaa 000020 0
+fi
+
+/usr/bin/ssh $@
+
+set_color aaaaaa 000000 0
