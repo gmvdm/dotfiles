@@ -1,0 +1,1 @@
+- Add hippie-expand, with lots of extensions to (setq 'hippie-expand-try-functions-list '(...)) based on sensible order
