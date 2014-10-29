@@ -14,7 +14,9 @@
 ;; Setup Yasnippet - http://github.com/capitaomorte/yasnippet
 (yas-global-mode 1)
 
+;; Setup ESS
 (require 'ess-site)
+(setq ess-ask-for-ess-directory nil)
 
 ;; Setup the scratch file
 ;; See: http://emacsredux.com/blog/2014/07/25/configure-the-scratch-buffers-mode/
