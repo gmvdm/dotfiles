@@ -63,11 +63,18 @@
       (paredit-mode 1)))
 (add-hook 'minibuffer-setup-hook 'conditionally-enable-paredit-mode)
 
-(require 'textmate)
-(textmate-mode)
-
 ;; Projectile mode: https://github.com/bbatsov/projectile
 (projectile-global-mode)
+
+;; Flx-ido mode
+(require 'flx-ido)
+(ido-mode 1)
+(ido-everywhere 1)
+(flx-ido-mode 1)
+;; disable ido faces to see flx highlights.
+(setq ido-enable-flex-matching t)
+(setq ido-use-faces nil)
+
 
 ;; Hive / Hadoop
 (add-to-list 'auto-mode-alist '("\\.hql$" . sql-mode))
