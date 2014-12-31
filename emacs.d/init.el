@@ -4,16 +4,14 @@
 ;;;
 ;;; Code:
 
-(require 'cl)
 ;; Turn off mouse interface early in startup to avoid momentary display
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-(setq inhibit-startup-message t)
 
+(setq inhibit-startup-message t)
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "open"
-      marmalade-server "http://marmalade-repo.org/"
       custom-file (expand-file-name "~/.emacs.d/custom.el")
       ido-handle-duplicate-virtual-buffers 2)
 
@@ -24,6 +22,7 @@
 (require 'package)
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
+                         ("org" . "http://orgmode.org/elpa/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")))
 (package-initialize)
@@ -39,7 +38,7 @@
                       color-theme-railscasts
                       color-theme-ir-black
                       yasnippet
-                      ess
+                      ess flycheck
 		      ;; ruby-mode inf-ruby
 		      scala-mode php-mode
                       workgroups
@@ -49,12 +48,11 @@
   (when (not (package-installed-p p))
     (package-install p)))
 
-;; (setq temporary-file-directory "~/.emacs.d/tmp/")
-
 ;; You can keep system- or user-specific customizations here
 (setq dotfiles-dir (file-name-directory
                     (or (buffer-file-name) load-file-name)))
 (setq system-specific-config (concat dotfiles-dir system-name ".el")
+      custom-key-config (concat dotfiles-dir "custom-keys.el")
       user-specific-config (concat dotfiles-dir user-login-name ".el")
       user-specific-dir (concat dotfiles-dir user-login-name)
       lang-specific-dir (concat dotfiles-dir "lang")
@@ -75,6 +73,7 @@
     (mapc #'load (directory-files user-specific-dir nil ".*el$")))
 
 (if (file-exists-p user-specific-config) (load user-specific-config))
+(if (file-exists-p custom-key-config) (load custom-key-config))
 
 (provide 'init)
 ;;; init.el ends here

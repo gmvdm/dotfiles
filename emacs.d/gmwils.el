@@ -4,9 +4,39 @@
 
 ;;; Code:
 
+;;; Emacs settings:
+
+(setq debug-on-error t)
+
+;; Setup the scratch file
+;; See: http://emacsredux.com/blog/2014/07/25/configure-the-scratch-buffers-mode/
+(setq initial-scratch-message "")
+(setq initial-major-mode 'lisp-interaction-mode)
+
+;; Always fill at 78 chars
+(add-hook 'text-mode-hook #'turn-on-auto-fill)
+(setq-default fill-column 78)
+
 ;; show trailing whitespace
 (setq-default show-trailing-whitespace t)
 (global-set-key "\C-c\C-w" 'whitespace-cleanup)
+
+; Set default file encoding to utf-8 (http://nakkaya.com/2009/11/29/emacs-and-international-characters/)
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
+;; Auto Save files to temp dir
+;; http://emacswiki.org/emacs/AutoSave
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
+
+;;; Other packages:
 
 (require 'smart-tab)
 (global-smart-tab-mode 1)
@@ -18,13 +48,6 @@
 (require 'ess-site)
 (setq ess-ask-for-ess-directory nil)
 
-;; Setup the scratch file
-;; See: http://emacsredux.com/blog/2014/07/25/configure-the-scratch-buffers-mode/
-(setq initial-scratch-message "")
-(setq initial-major-mode 'lisp-interaction-mode)
-
-; don't open new frames when opening files in aquamacs
-(setq one-buffer-one-frame-mode nil)
 
 ;; Tramp mode - http://www.gnu.org/software/tramp/#Connection-types
 (setq tramp-default-method "scpx")
@@ -32,21 +55,13 @@
 (add-to-list 'auto-mode-alist '("\\.doc$" . doc-mode))
 (add-to-list 'auto-mode-alist '("\\.asciidoc$" . doc-mode))
 
-;; Setup for Workgroups (https://github.com/tlh/workgroups.el)
-(require 'workgroups)
-(setq wg-prefix-key (kbd "C-c w"))
-(wg-load "~/.emacs.d/workgroups")
-
 (require 'dired-x)
 
 (defun conditionally-enable-paredit-mode ()
   "Enable `paredit-mode' in the minibuffer, during `eval-expression'."
   (if (eq this-command 'eval-expression)
       (paredit-mode 1)))
-
 (add-hook 'minibuffer-setup-hook 'conditionally-enable-paredit-mode)
-
-(setq debug-on-error t)
 
 (require 'yaml-mode)
 
@@ -64,36 +79,19 @@
      (file-error (message "Flycheck not available; not configuring")))
 
 (require 'protobuf-mode)
-(require 'thrift-mode)
 (require 'puppet-mode)
 (add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
 
-;; TODO move to relevant location
-(defun browse-url-default-macosx-browser (url &optional new-window)
-  (interactive (browse-url-interactive-arg "URL: "))
-  (if (and new-window (>= emacs-major-version 23))
-      (ns-do-applescript
-       (format (concat "tell application \"Safari\" to make document with properties {URL:\"%s\"}\n"
-                       "tell application \"Safari\" to activate") url))
-    (start-process (concat "open " url) nil "open" url)))
-
 ;; Appearance
-(if (featurep 'aquamacs)
-    (set-face-font 'default "-apple-PanicSans-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1"))
-
 (require 'color-theme)
-;; (require 'color-theme-railscasts)
 (require 'color-theme-ir-black)
 
-;; Always fill at 78 chars
-(add-hook 'text-mode-hook #'turn-on-auto-fill)
-(setq-default fill-column 78)
 
 ;; Deft setup - http://jblevins.org/projects/deft/
 (when (require 'deft nil 'noerror)
   (setq
    deft-extension "org"
-   deft-directory "~/Dropbox/Notes/"
+   deft-directory "~/Notes/"
    deft-text-mode 'org-mode))
 
 ;; Setup org-babel
@@ -128,98 +126,6 @@
     (jump-to-register :magit-fullscreen))
 
   (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
-
-;; Save point position between sessions
-(require 'saveplace)
-(setq-default save-place t)
-(setq save-place-file (expand-file-name ".places" user-emacs-directory))
-
-;; Setup an edit server
-;; Used by Chrome plugin: http://www.emacswiki.org/emacs/Google_Chrome
-(when (and (window-system) (require 'edit-server nil t))
-  (setq edit-server-new-frame nil)
-  (edit-server-start)
-  (setq edit-server-url-major-mode-alist
-        '(("github\\.com" . markdown-mode)
-          ("mail\\.google\\.com" . html-mode))))
-
-;; http://emacsredux.com/blog/2013/03/27/copy-filename-to-the-clipboard/
-(defun copy-file-name-to-clipboard ()
-  "Copy the current buffer file name to the clipboard."
-  (interactive)
-  (let ((filename (if (equal major-mode 'dired-mode)
-                      default-directory
-                    (buffer-file-name))))
-    (when filename
-      (kill-new filename)
-      (message "Copied buffer file name '%s' to the clipboard." filename))))
-
-;; Auto Save files to temp dir
-;; http://emacswiki.org/emacs/AutoSave
-(setq backup-directory-alist
-      `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms
-      `((".*" ,temporary-file-directory t)))
-
-;;; http://emacswiki.org/emacs/UnfillParagraph
-(defun unfill-paragraph ()
-  "Takes a multi-line paragraph and makes it into a single line of text."
-  (interactive)
-  (let ((fill-column (point-max)))
-    (fill-paragraph nil)))
-;; Handy key definition
-(define-key global-map "\M-Q" 'unfill-paragraph)
-
-;; Allow for easy use of new lines
-(defun open-line-below ()
-  (interactive)
-  (end-of-line)
-  (newline)
-  (indent-for-tab-command))
-
-(defun open-line-above ()
-  (interactive)
-  (beginning-of-line)
-  (newline)
-  (forward-line -1)
-  (indent-for-tab-command))
-
-(global-set-key (kbd "<C-return>") 'open-line-below)
-(global-set-key (kbd "<C-S-return>") 'open-line-above)
-
-;; Shuffle lines
-(defun move-line-down ()
-  (interactive)
-  (let ((col (current-column)))
-    (save-excursion
-      (forward-line)
-      (transpose-lines 1))
-    (forward-line)
-    (move-to-column col)))
-
-(defun move-line-up ()
-  (interactive)
-  (let ((col (current-column)))
-    (save-excursion
-      (forward-line)
-      (transpose-lines -1))
-    (move-to-column col)))
-
-(global-set-key (kbd "<C-S-down>") 'move-line-down)
-(global-set-key (kbd "<C-S-up>") 'move-line-up)
-
-;; Smarter buffer names
-;; (require 'uniquify)
-;; (setq uniquify-buffer-name-style (quote post-forward))
-
-; Set default file encoding to utf-8 (http://nakkaya.com/2009/11/29/emacs-and-international-characters/)
-(setq locale-coding-system 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(set-selection-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
-
-(load-file "~/.emacs.d/custom-keys.el")
 
 (provide 'gmwils)
 ;;; gmwils.el ends here
