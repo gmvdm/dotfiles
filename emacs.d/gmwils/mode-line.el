@@ -45,6 +45,16 @@
   "Mode line format for Projectile.")
 (put 'gmwils-projectile-mode-line 'risky-local-variable t)
 
+;; Shorter VC mode line
+(defvar gmwils-vc-mode-line
+  '(" " (:propertize
+         ;; Strip the backend name from the VC status information
+         (:eval (let ((backend (symbol-name (vc-backend (buffer-file-name)))))
+                  (substring vc-mode (+ (length backend) 2))))
+         face font-lock-variable-name-face))
+  "Mode line format for VC Mode.")
+(put 'gmwils-vc-mode-line 'risky-local-variable t)
+
 (setq-default mode-line-format
               '("%e" mode-line-front-space
                 mode-line-mule-info
@@ -54,7 +64,7 @@
                 mode-line-buffer-identification
                 " " mode-line-position
                 gmwils-projectile-mode-line
-                (vc-mode vc-mode) ; VC status
+                gmwils-vc-mode-line
                 (flycheck-mode flycheck-mode-line) ; Flycheck status
                 " "
                 mode-line-misc-info
