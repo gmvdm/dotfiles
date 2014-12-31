@@ -32,3 +32,5 @@
 	default = simple
 [hub]
 	host = ghe.spotify.net
+[credential]
+	helper = osxkeychain
