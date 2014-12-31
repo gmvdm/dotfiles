@@ -51,8 +51,7 @@
 (require 'ess-site)
 (setq ess-ask-for-ess-directory nil)
 
-
-
+;; Doc-mode
 (add-to-list 'auto-mode-alist '("\\.doc$" . doc-mode))
 (add-to-list 'auto-mode-alist '("\\.asciidoc$" . doc-mode))
 
@@ -66,6 +65,9 @@
 
 (require 'textmate)
 (textmate-mode)
+
+;; Projectile mode: https://github.com/bbatsov/projectile
+(projectile-global-mode)
 
 ;; Hive / Hadoop
 (add-to-list 'auto-mode-alist '("\\.hql$" . sql-mode))

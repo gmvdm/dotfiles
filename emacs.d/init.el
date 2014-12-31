@@ -42,7 +42,7 @@
                       color-theme-railscasts
                       color-theme-ir-black
                       yasnippet
-                      ess flycheck
+                      ess flycheck projectile
 		      ;; ruby-mode inf-ruby
 		      scala-mode php-mode
                       workgroups
