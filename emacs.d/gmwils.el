@@ -35,6 +35,9 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
+;; Tramp mode - http://www.gnu.org/software/tramp/#Connection-types
+(setq tramp-default-method "scpx")
+
 
 ;;; Other packages:
 
@@ -49,8 +52,6 @@
 (setq ess-ask-for-ess-directory nil)
 
 
-;; Tramp mode - http://www.gnu.org/software/tramp/#Connection-types
-(setq tramp-default-method "scpx")
 
 (add-to-list 'auto-mode-alist '("\\.doc$" . doc-mode))
 (add-to-list 'auto-mode-alist '("\\.asciidoc$" . doc-mode))
@@ -62,8 +63,6 @@
   (if (eq this-command 'eval-expression)
       (paredit-mode 1)))
 (add-hook 'minibuffer-setup-hook 'conditionally-enable-paredit-mode)
-
-(require 'yaml-mode)
 
 (require 'textmate)
 (textmate-mode)
