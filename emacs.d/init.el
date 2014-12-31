@@ -35,7 +35,7 @@
 
 (defvar my-packages '(clojure-mode clojure-test-mode
                       markdown-mode yaml-mode tuareg
-		      textmate color-theme magit deft
+		      color-theme magit deft
 		      paredit python-mode
 		      haskell-mode go-mode
                       js2-mode
