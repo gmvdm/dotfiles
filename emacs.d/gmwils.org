@@ -1,0 +1,712 @@
+#+TITLE: Geoff van der Meer's Emacs configuration
+#+OPTIONS: toc:4 h:4
+* Introduction
+Using [[http://orgmode.org/][org-mode]] for emacs config feels like cheating. Thanks [[https://github.com/mwfogleman/config/blob/master/home/.emacs.d/michael.org][Michael]] for the
+inspiration!
+
+* Settings
+** Personal information
+#+BEGIN_SRC emacs-lisp
+(setq user-full-name "Geoff van der Meer"
+      user-mail-address "gmwils@gmail.com")
+#+END_SRC
+
+** General settings
+*** Debug
+#+BEGIN_SRC emacs-lisp
+(setq debug-on-error t)
+#+END_SRC
+
+*** Other settings
+#+BEGIN_SRC emacs-lisp
+;; Turn off mouse interface early in startup to avoid momentary display
+(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
+(setq inhibit-startup-message t)
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "open"
+      custom-file (expand-file-name "~/.emacs.d/custom.el")
+      ido-handle-duplicate-virtual-buffers 2)
+#+END_SRC
+** Enable package support
+I set up packages, Melpa, and use-package bright and early so that I can make
+use of use-package's bind-key macro.
+
+When I first copy this set-up into a new machine, I still have to require
+package, add MELPA, initialize package, and grab use-package, and a couple of
+others from the package archives and the internet. This could be improved.
+
+#+BEGIN_SRC emacs-lisp
+(require 'package)
+
+(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
+                         ("gnu" . "http://elpa.gnu.org/packages/")
+                         ("org" . "http://orgmode.org/elpa/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")))
+
+(setq load-prefer-newer t)
+(require 'use-package) ;; currently you have to evaluate everything up to here, and grab use-package manually :/
+#+END_SRC
+*** Paradox
+#+BEGIN_SRC emacs-lisp
+  (use-package paradox
+    :ensure t
+    :config
+    (setq paradox-execute-asynchronously t))
+#+END_SRC
+
+*** Diminish
+Reduce mode line clutter: http://www.emacswiki.org/emacs/DiminishedModes
+#+BEGIN_SRC emacs-lisp
+(use-package diminish
+  :ensure t
+  :init
+  (defmacro rename-modeline (package-name mode new-name)
+    `(eval-after-load ,package-name
+       '(defadvice ,mode (after rename-modeline activate)
+          (setq mode-name ,new-name)))))
+#+END_SRC
+
+*** Scratch file
+See: http://emacsredux.com/blog/2014/07/25/configure-the-scratch-buffers-mode/
+#+BEGIN_SRC emacs-lisp
+(setq initial-scratch-message "")
+(setq initial-major-mode 'lisp-interaction-mode)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+;; Always fill at 78 chars
+(add-hook 'text-mode-hook #'turn-on-auto-fill)
+(setq-default fill-column 78)
+
+;; show trailing whitespace
+(setq-default show-trailing-whitespace t)
+(global-set-key "\C-c\C-w" 'whitespace-cleanup)
+
+; Set default file encoding to utf-8 (http://nakkaya.com/2009/11/29/emacs-and-international-characters/)
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
+;; Auto Save files to temp dir
+;; http://emacswiki.org/emacs/AutoSave
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
+;; Tramp mode - http://www.gnu.org/software/tramp/#Connection-types
+(setq tramp-default-method "scpx")
+#+END_SRC
+
+** Setup directories
+#+BEGIN_SRC emacs-lisp
+(setq dotfiles-dir (file-name-directory
+                    (or (buffer-file-name) load-file-name)))
+#+END_SRC
+** Other init
+#+BEGIN_SRC emacs-lisp
+; TODO - setup packages
+(defvar my-packages '(clojure-mode clojure-test-mode
+                      markdown-mode yaml-mode tuareg
+		      color-theme magit deft
+		      paredit python-mode
+		      haskell-mode go-mode
+                      js2-mode
+                      color-theme-railscasts
+                      color-theme-ir-black
+                      yasnippet
+                      ess flycheck projectile
+		      ;; ruby-mode inf-ruby
+		      scala-mode php-mode
+                      workgroups
+                      smart-tab protobuf-mode
+                      marmalade oddmuse scpaste))
+;(dolist (p my-packages)
+;  (when (not (package-installed-p p))
+;    (package-install p)))
+
+#+END_SRC
+** Mode line
+See: http://www.lunaryorn.com/2014/07/26/make-your-emacs-mode-line-more-useful.html
+#+BEGIN_SRC emacs-lisp
+;; More compact position display
+(setq-default mode-line-position
+              '((-3 "%p") (size-indication-mode ("/" (-4 "%I")))
+                " "
+                (line-number-mode
+                 ("%l" (column-number-mode ":%c")))))
+
+(defvar gmwils-projectile-mode-line
+  '(:propertize
+    (:eval (when (ignore-errors (projectile-project-root))
+             (concat " " (projectile-project-name))))
+    face font-lock-constant-face)
+  "Mode line format for Projectile.")
+(put 'gmwils-projectile-mode-line 'risky-local-variable t)
+
+;; Shorter VC mode line
+(defvar gmwils-vc-mode-line
+  '(" " (:propertize
+         ;; Strip the backend name from the VC status information
+         (:eval (let ((backend (symbol-name (vc-backend (buffer-file-name)))))
+                  (substring vc-mode (+ (length backend) 2))))
+         face font-lock-variable-name-face))
+  "Mode line format for VC Mode.")
+(put 'gmwils-vc-mode-line 'risky-local-variable t)
+
+(setq-default mode-line-format
+              '("%e" mode-line-front-space
+                mode-line-mule-info
+                mode-line-client
+                mode-line-modified
+                mode-line-remote
+                mode-line-buffer-identification
+                " " mode-line-position
+                gmwils-projectile-mode-line
+                gmwils-vc-mode-line
+                (flycheck-mode flycheck-mode-line) ; Flycheck status
+                " "
+                mode-line-misc-info
+                " "
+                mode-line-modes
+                mode-line-end-spaces))
+#+END_SRC
+* Packages
+#+BEGIN_SRC emacs-lisp
+
+(require 'smart-tab)
+(global-smart-tab-mode 1)
+
+;; Setup Yasnippet - http://github.com/capitaomorte/yasnippet
+(yas-global-mode 1)
+
+;; Setup ESS
+(require 'ess-site)
+(setq ess-ask-for-ess-directory nil)
+
+;; Doc-mode
+(add-to-list 'auto-mode-alist '("\\.doc$" . doc-mode))
+(add-to-list 'auto-mode-alist '("\\.asciidoc$" . doc-mode))
+
+(require 'dired-x)
+
+(defun conditionally-enable-paredit-mode ()
+  "Enable `paredit-mode' in the minibuffer, during `eval-expression'."
+  (if (eq this-command 'eval-expression)
+      (paredit-mode 1)))
+(add-hook 'minibuffer-setup-hook 'conditionally-enable-paredit-mode)
+
+;; Projectile mode: https://github.com/bbatsov/projectile
+(projectile-global-mode)
+
+;; Flx-ido mode
+(require 'flx-ido)
+(ido-mode 1)
+(ido-everywhere 1)
+(flx-ido-mode 1)
+;; disable ido faces to see flx highlights.
+(setq ido-enable-flex-matching t)
+(setq ido-use-faces nil)
+
+
+;; Hive / Hadoop
+(add-to-list 'auto-mode-alist '("\\.hql$" . sql-mode))
+
+(require 'protobuf-mode)
+
+;; Appearance
+(require 'color-theme)
+(require 'color-theme-ir-black)
+
+
+;; Deft setup - http://jblevins.org/projects/deft/
+(when (require 'deft nil 'noerror)
+  (setq
+   deft-extension "org"
+   deft-directory "~/Notes/"
+   deft-text-mode 'org-mode))
+
+;; Setup org-babel
+;; http://orgmode.org/org.html#Languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (R . t)
+   (ruby . t)
+   (sh . t)
+   (python . t)
+   (js . t)))
+
+;; dash-at-point
+;; https://github.com/stanaka/dash-at-point#readme
+(autoload 'dash-at-point "dash-at-point"
+  "Search the word at point with Dash." t nil)
+(global-set-key "\C-cd" 'dash-at-point)
+
+;; full screen magit-status
+;; http://whattheemacsd.com/setup-magit.el-01.html
+(when (require 'magit nil 'noerror)
+  (defadvice magit-status (around magit-fullscreen activate)
+    (window-configuration-to-register :magit-fullscreen)
+    ad-do-it
+    (delete-other-windows))
+
+  (defun magit-quit-session ()
+    "Restores the previous window configuration and kills the magit buffer"
+    (interactive)
+    (kill-buffer)
+    (jump-to-register :magit-fullscreen))
+
+  (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
+
+#+END_SRC
+** TODO Doc mode
+** TODO Virtual env mode for Python
+* Emacs
+* Development
+** Flycheck
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck
+  :ensure t
+  :init
+  (global-flycheck-mode))
+#+END_SRC
+** Languages
+*** Common setup
+#+BEGIN_SRC emacs-lisp
+;; Ensure we're using UTF8 as a default
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+(ansi-color-for-comint-mode-on)
+
+;; Transparently open compressed files
+(auto-compression-mode t)
+
+;; Highlight matching parentheses when the point is on them.
+(show-paren-mode 1)
+
+;; ido-mode is like magic pixie dust!
+(when (> emacs-major-version 21)
+  (ido-mode t)
+  (setq ido-enable-prefix nil
+        ido-enable-flex-matching t
+        ido-create-new-buffer 'always
+        ido-use-filename-at-point 'guess
+        ido-max-prospects 10))
+
+(set-default 'indent-tabs-mode nil)
+(set-default 'indicate-empty-lines t)
+(set-default 'imenu-auto-rescan t)
+
+(defalias 'yes-or-no-p 'y-or-n-p)
+(random t) ;; Seed the random-number generator
+
+;; Don't clutter up directories with files~
+(setq backup-directory-alist `(("." . ,(expand-file-name
+                                        (concat dotfiles-dir "backups")))))
+;; Make backups of files, even when they're in version control
+(setq vc-make-backup-files t)
+
+;; Associate modes with file extensions
+(add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
+(add-to-list 'auto-mode-alist '("\\.ya?ml$" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\(on\\)?$" . js-mode))
+(add-to-list 'auto-mode-alist '("\\.xml$" . nxml-mode))
+(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
+
+
+(eval-after-load 'grep
+  '(when (boundp 'grep-find-ignored-files)
+    (add-to-list 'grep-find-ignored-files "target")
+    (add-to-list 'grep-find-ignored-files "*.class")))
+
+;; Default to unified diffs
+(setq diff-switches "-u -w")
+
+;; make emacs use the clipboard
+(setq x-select-enable-clipboard t)
+#+END_SRC
+*** C family
+#+BEGIN_SRC emacs-lisp
+(use-package google-c-style
+  :ensure t
+  :config
+  (add-hook 'c-mode-common-hook 'google-set-c-style)
+  (add-hook 'c-mode-common-hook 'google-make-newline-indent)
+  (add-hook 'java-mode-hook 'google-set-c-style)
+  (add-hook 'java-mode-hook 'google-make-newline-indent))
+
+(defun flymake-cpplint-init ()
+  (list "cpplint" (list (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))))
+
+#+END_SRC
+*** Haskell
+Wiki: https://github.com/haskell/haskell-mode/wiki
+Tutorial: https://github.com/serras/emacs-haskell-tutorial/blob/master/tutorial.md
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+
+;; Setup cabal
+(let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
+  (setenv "PATH" (concat my-cabal-path ":" (getenv "PATH")))
+  (add-to-list 'exec-path my-cabal-path))
+(custom-set-variables '(haskell-tags-on-save t))
+
+(custom-set-variables
+  '(haskell-process-suggest-remove-import-lines t)
+  '(haskell-process-auto-import-loaded-modules t)
+  '(haskell-process-log t))
+
+(eval-after-load 'haskell-mode
+  '(progn
+     (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
+     (define-key haskell-mode-map (kbd "C-c `") 'haskell-interactive-bring)
+     (define-key haskell-mode-map (kbd "C-c C-t") 'haskell-process-do-type)
+     (define-key haskell-mode-map (kbd "C-c C-i") 'haskell-process-do-info)
+     (define-key haskell-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
+     (define-key haskell-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
+     (define-key haskell-mode-map (kbd "C-c c") 'haskell-process-cabal)
+     (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
+  ))
+
+(eval-after-load 'haskell-cabal
+  '(progn
+     (define-key haskell-cabal-mode-map (kbd "C-c `") 'haskell-interactive-bring)
+     (define-key haskell-cabal-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
+     (define-key haskell-cabal-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
+     (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
+     (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)))
+
+(custom-set-variables '(haskell-process-type 'cabal-repl))
+
+(eval-after-load 'haskell-mode
+  '(define-key haskell-mode-map (kbd "C-c C-o") 'haskell-compile))
+(eval-after-load 'haskell-cabal
+  '(define-key haskell-cabal-mode-map (kbd "C-c C-o") 'haskell-compile))
+#+END_SRC
+
+*** Javascript
+#+BEGIN_SRC emacs-lisp
+(autoload 'js2-mode "js2-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+
+(autoload 'espresso-mode "espresso")
+(add-to-list 'auto-mode-alist '("\\.json$" . espresso-mode))
+
+;; Fix the crappy indentation of js2-mode
+(defun my-js2-indent-function ()
+  (interactive)
+  (save-restriction
+    (widen)
+    (let* ((inhibit-point-motion-hooks t)
+           (parse-status (save-excursion (syntax-ppss (point-at-bol))))
+           (offset (- (current-column) (current-indentation)))
+           (indentation (espresso--proper-indentation parse-status))
+           node)
+
+      (save-excursion
+
+        ;; consecutive declarations in a var statement are nice if
+        ;; properly aligned, i.e:
+        ;;
+        ;; var foo = "bar",
+        ;;     bar = "foo";
+        (setq node (js2-node-at-point))
+        (when (and node
+                   (= js2-NAME (js2-node-type node))
+                   (= js2-VAR (js2-node-type (js2-node-parent node))))
+          (setq indentation (+ 4 indentation))))
+
+      (indent-line-to indentation)
+      (when (> offset 0) (forward-char offset)))))
+
+(defun my-indent-sexp ()
+  (interactive)
+  (save-restriction
+    (save-excursion
+      (widen)
+      (let* ((inhibit-point-motion-hooks t)
+             (parse-status (syntax-ppss (point)))
+             (beg (nth 1 parse-status))
+             (end-marker (make-marker))
+             (end (progn (goto-char beg) (forward-list) (point)))
+             (ovl (make-overlay beg end)))
+        (set-marker end-marker end)
+        (overlay-put ovl 'face 'highlight)
+        (goto-char beg)
+        (while (< (point) (marker-position end-marker))
+          ;; don't reindent blank lines so we don't set the "buffer
+          ;; modified" property for nothing
+          (beginning-of-line)
+          (unless (looking-at "\\s-*$")
+            (indent-according-to-mode))
+          (forward-line))
+        (run-with-timer 0.5 nil '(lambda(ovl)
+                                   (delete-overlay ovl)) ovl)))))
+
+
+(defun my-js2-mode-hook ()
+  (require 'espresso)
+  ;; (setq espresso-indent-level javascript-indent
+  ;;       indent-tabs-mode nil
+  ;;       c-basic-offset javascript-indent)
+  (c-toggle-auto-state 0)
+  (c-toggle-hungry-state 1)
+  (set (make-local-variable 'indent-line-function) 'my-js2-indent-function)
+  (define-key js2-mode-map [(meta control |)] 'cperl-lineup)
+  (define-key js2-mode-map [(meta control \;)]
+    '(lambda()
+       (interactive)
+       (insert "/* -----[ ")
+       (save-excursion
+         (insert " ]----- */"))
+       ))
+  (define-key js2-mode-map [(return)] 'newline-and-indent)
+  (define-key js2-mode-map [(backspace)] 'c-electric-backspace)
+  (define-key js2-mode-map [(control d)] 'c-electric-delete-forward)
+  (define-key js2-mode-map [(control meta q)] 'my-indent-sexp)
+  (if (featurep 'js2-highlight-vars)
+    (js2-highlight-vars-mode)))
+
+(add-hook 'js2-mode-hook 'my-js2-mode-hook)
+#+END_SRC
+
+*** Lisp
+#+BEGIN_SRC emacs-lisp
+(define-key read-expression-map (kbd "TAB") 'lisp-complete-symbol)
+(define-key lisp-mode-shared-map (kbd "C-c l") "lambda")
+(define-key lisp-mode-shared-map (kbd "RET") 'reindent-then-newline-and-indent)
+(define-key lisp-mode-shared-map (kbd "C-\\") 'lisp-complete-symbol)
+(define-key lisp-mode-shared-map (kbd "C-c v") 'eval-buffer)
+
+;;; Enhance Lisp Modes
+
+(eval-after-load 'paredit
+  ;; need a binding that works in the terminal
+  '(define-key paredit-mode-map (kbd "M-)") 'paredit-forward-slurp-sexp))
+
+(defun turn-on-paredit ()
+  (paredit-mode t))
+
+(dolist (x '(scheme emacs-lisp lisp clojure))
+  (when window-system
+    (font-lock-add-keywords
+     (intern (concat (symbol-name x) "-mode"))
+     '(("(\\|)" . 'esk-paren-face))))
+  (add-hook
+   (intern (concat (symbol-name x) "-mode-hook")) 'turn-on-paredit)
+  ;; (add-hook
+   ;; (intern (concat (symbol-name x) "-mode-hook")) 'run-coding-hook)
+  )
+
+(eval-after-load 'clojure-mode
+  '(font-lock-add-keywords
+    'clojure-mode `(("(\\(fn\\>\\)"
+                     (0 (progn (compose-region (match-beginning 1)
+                                               (match-end 1) "ƒ")
+                               nil))))))
+
+; XXX (require 'clojurescript-mode)
+(setq inferior-lisp-program "browser-repl")
+
+;; Turn on eldoc - http://emacswiki.org/emacs/ElDoc
+(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
+#+END_SRC
+*** PHP
+#+BEGIN_SRC emacs-lisp
+(setq auto-mode-alist (cons '("\\.php$" . php-mode) auto-mode-alist))
+(autoload 'php-mode "php-mode" "PHP editing mode." t)
+#+END_SRC
+*** Python
+#+BEGIN_SRC emacs-lisp
+(setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.tac$" . python-mode) auto-mode-alist))
+(setq interpreter-mode-alist (cons '("python" . python-mode)
+				   interpreter-mode-alist))
+(autoload 'python-mode "python-mode" "Python editing mode." t)
+#+END_SRC
+*** Ruby
+#+BEGIN_SRC emacs-lisp
+(eval-after-load 'ruby-mode
+  '(progn
+     ;; work around possible elpa bug
+     (ignore-errors (require 'ruby-compilation))
+     (setq ruby-use-encoding-map nil)
+     (define-key ruby-mode-map (kbd "RET") 'reindent-then-newline-and-indent)
+     (define-key ruby-mode-map (kbd "C-M-h") 'backward-kill-word)
+     (define-key ruby-mode-map (kbd "C-c l") "lambda")))
+
+
+;; Rake files are ruby, too, as are gemspecs, rackup files, etc.
+(add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.gemspec$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.ru$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Vagrantfile$" . ruby-mode))
+#+END_SRC
+* Custom functions
+** Run test
+A function to run the unit test assocated with the current file.
+
+- TODO(gmwils): Run cucumber if editing features
+- TODO(gmwils): use different test runners based on extension (eg. rspec, py, etc)
+- TODO(gmwils): if file is ROOT/a/b/file, then try ROOT/test/a/b/test_file
+
+#+BEGIN_SRC emacs-lisp
+
+(defun string/ends-with (s ending)
+  "return non-nil if string S ends with ENDING."
+  (let ((elength (length ending)))
+            (string= (substring s (- 0 elength)) ending)))
+
+(defun find-test-file (f)
+  "find the equivalent test file in the current project"
+  (let ((test-dir (concat (textmate-find-project-root) "/test/"))
+        (filename (file-name-nondirectory (file-name-sans-extension f)))
+        (ext (file-name-extension f)))
+    (concat test-dir filename "_test." ext)))
+
+(defun test-file-p (f)
+  "return non-nil if file is a test file"
+  (string/ends-with (file-name-sans-extension f) "test"))
+
+(defun test-file-name (f)
+  "return a test file or nil if none found."
+  (if (or (eq f nil) (test-file-p f))
+      f
+      (find-test-file f)))
+
+(defun run-test-from-file (f)
+  "given a file, run tests on it"
+  (let ((base-dir (textmate-find-project-root))
+        (virtenv (file-name-nondirectory (getenv "VIRTUAL_ENV"))))
+    (if (and (not (eq f nil)) (file-readable-p f))
+        (shell-command (concat "("
+                               "cd " base-dir "; "
+                               "source ~/.virtualenvs/" virtenv "/bin/activate; "
+                               "PYTHONPATH=\"" base-dir ";$PYTHONPATH\" py.test " f ")"))
+        (message "Unable to run test for file %s" f))))
+
+(defun run-test ()
+  "run tests based on the current buffer"
+  (interactive)
+  (save-buffer)
+  (run-test-from-file (test-file-name (buffer-file-name))))
+
+(global-set-key (kbd "C-t") 'run-test)
+#+END_SRC
+** General utils
+#+BEGIN_SRC emacs-lisp
+;;; http://emacswiki.org/emacs/UnfillParagraph
+(defun unfill-paragraph ()
+  "Takes a multi-line paragraph and makes it into a single line of text."
+  (interactive)
+  (let ((fill-column (point-max)))
+    (fill-paragraph nil)))
+;; Handy key definition
+(define-key global-map "\M-Q" 'unfill-paragraph)
+
+;; http://emacsredux.com/blog/2013/03/27/copy-filename-to-the-clipboard/
+(defun copy-file-name-to-clipboard ()
+  "Copy the current buffer file name to the clipboard."
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (kill-new filename)
+      (message "Copied buffer file name '%s' to the clipboard." filename))))
+
+;; Open browser with URL
+(defun browse-url-default-macosx-browser (url &optional new-window)
+  (interactive (browse-url-interactive-arg "URL: "))
+  (if (and new-window (>= emacs-major-version 23))
+      (ns-do-applescript
+       (format (concat "tell application \"Safari\" to make document with properties {URL:\"%s\"}\n"
+                       "tell application \"Safari\" to activate") url))
+    (start-process (concat "open " url) nil "open" url)))
+
+;; Commenting
+
+;;; allow-line-as-region-for-function adds an "-or-line" version of
+;;; the given comment function which (un)comments the current line is
+;;; the mark is not active.  This code comes from Aquamac's osxkeys.el
+;;; and is licensed under the GPL
+(defmacro allow-line-as-region-for-function (orig-function)
+`(defun ,(intern (concat (symbol-name orig-function) "-or-line"))
+   ()
+   ,(format "Like `%s', but acts on the current line if mark is not active."
+            orig-function)
+   (interactive)
+   (if mark-active
+       (call-interactively (function ,orig-function))
+     (save-excursion
+       ;; define a region (temporarily) -- so any C-u prefixes etc. are preserved.
+       (beginning-of-line)
+       (set-mark (point))
+       (end-of-line)
+       (call-interactively (function ,orig-function))))))
+
+
+(defun textmate-define-comment-line ()
+  "Add or-line (un)comment function if not already defined"
+  (unless (fboundp 'comment-or-uncomment-region-or-line)
+    (allow-line-as-region-for-function comment-or-uncomment-region)))
+
+(textmate-define-comment-line)
+(global-set-key (kbd "C-x /") 'comment-or-uncomment-region-or-line)
+#+END_SRC
+* Key bindings
+#+BEGIN_SRC emacs-lisp
+(progn
+  ;; Font size
+  (define-key global-map (kbd "C-+") 'text-scale-increase)
+  (define-key global-map (kbd "C--") 'text-scale-decrease)
+
+  ;; Use regex searches by default.
+  (global-set-key (kbd "C-s") 'isearch-forward-regexp)
+  (global-set-key (kbd "\C-r") 'isearch-backward-regexp)
+  (global-set-key (kbd "C-M-s") 'isearch-forward)
+  (global-set-key (kbd "C-M-r") 'isearch-backward)
+
+  ;; M-S-6 is awkward
+  (global-set-key (kbd "C-c q") 'join-line)
+  (global-set-key (kbd "M-j")
+            (lambda ()
+                  (interactive)
+                  (join-line -1)))
+
+
+  ;; Cycle between windows - https://github.com/garybernhardt/dotfiles/blob/master/.emacs
+  (global-set-key (kbd "C-o") 'other-window)
+  (defun prev-window ()
+    (interactive)
+    (other-window -1))
+  (global-set-key "\M-o" 'prev-window)
+
+  ;; Help should search more than just commands
+  (global-set-key (kbd "C-h a") 'apropos)
+
+  (global-set-key (kbd "C-x m") 'magit-status)
+  (global-set-key (kbd "M-s")   'fixup-whitespace)
+
+  ;; Toggle auto-fill
+  (global-set-key (kbd "C-c q") 'auto-fill-mode)
+)
+#+END_SRC
