@@ -25,6 +25,7 @@ inspiration!
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 (setq inhibit-startup-message t)
+
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "open"
       custom-file (expand-file-name "~/.emacs.d/custom.el")
@@ -52,7 +53,7 @@ others from the package archives and the internet. This could be improved.
                          ("org" . "http://orgmode.org/elpa/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")))
-
+(package-initialize)
 (setq load-prefer-newer t)
 (require 'use-package) ;; currently you have to evaluate everything up to here, and grab use-package manually :/
 #+END_SRC
@@ -85,22 +86,28 @@ Reduce mode line clutter: http://www.emacswiki.org/emacs/DiminishedModes
 		      paredit python-mode
 		      haskell-mode go-mode
                       js2-mode
-                      color-theme-railscasts
-                      color-theme-ir-black
-                      yasnippet
                       ess flycheck projectile
 		      ;; ruby-mode inf-ruby
 		      scala-mode php-mode
                       workgroups
                       smart-tab protobuf-mode
                       marmalade oddmuse scpaste))
-;(dolist (p my-packages)
-;  (when (not (package-installed-p p))
-;    (package-install p)))
-
 #+END_SRC
 
 * Emacs
+** Org
+*** Babel
+http://orgmode.org/org.html#Languages
+#+BEGIN_SRC emacs-lisp
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (R . t)
+   (ruby . t)
+   (sh . t)
+   (python . t)
+   (js . t)))
+#+END_SRC
 ** Scratch file
 See: http://emacsredux.com/blog/2014/07/25/configure-the-scratch-buffers-mode/
 #+BEGIN_SRC emacs-lisp
@@ -135,6 +142,12 @@ http://www.gnu.org/software/tramp/#Connection-types
 (setq tramp-default-method "scpx")
 #+END_SRC
 
+** Change prompts
+Make yes or no prompts be y or n prompts.
+
+#+BEGIN_SRC emacs-lisp
+(fset 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
 ** Backup files
 Auto Save files to temp dir: http://emacswiki.org/emacs/AutoSave
 #+BEGIN_SRC emacs-lisp
@@ -205,95 +218,154 @@ Set the actual mode line.
                 mode-line-end-spaces))
 #+END_SRC
 * Packages
+** Smart tab
 #+BEGIN_SRC emacs-lisp
+(use-package smart-tab
+ :ensure t
+ :init
+ (global-smart-tab-mode 1))
+#+END_SRC
 
-(require 'smart-tab)
-(global-smart-tab-mode 1)
+** YAS snippet
+Setup Yasnippet - http://github.com/capitaomorte/yasnippet
+#+BEGIN_SRC emacs-lisp
+(use-package yasnippet
+ :ensure t
+ :init
+ (yas-global-mode 1))
+#+END_SRC
 
-;; Setup Yasnippet - http://github.com/capitaomorte/yasnippet
-(yas-global-mode 1)
+** Git
+Setup full screen magit-status:
+http://whattheemacsd.com/setup-magit.el-01.html
 
-;; Setup ESS
-(require 'ess-site)
-(setq ess-ask-for-ess-directory nil)
+#+BEGIN_SRC emacs-lisp
+(use-package magit
+ :ensure t
+ :init
+ (defadvice magit-status (around magit-fullscreen activate)
+   (window-configuration-to-register :magit-fullscreen)
+   ad-do-it
+   (delete-other-windows))
 
-;; Doc-mode
-(add-to-list 'auto-mode-alist '("\\.doc$" . doc-mode))
-(add-to-list 'auto-mode-alist '("\\.asciidoc$" . doc-mode))
+ (defun magit-quit-session ()
+   "Restores the previous window configuration and kills the magit buffer"
+   (interactive)
+   (kill-buffer)
+   (jump-to-register :magit-fullscreen))
 
-(require 'dired-x)
+  (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
+#+END_SRC
 
+** ESS
+Emacs statistics mode.
+
+#+BEGIN_SRC emacs-lisp
+(use-package ess
+ :ensure t
+ :init
+ (setq ess-ask-for-ess-directory nil)
+ (require 'ess-site))
+#+END_SRC
+
+** Projectile mode
+https://github.com/bbatsov/projectile
+
+#+BEGIN_SRC emacs-lisp
+(use-package projectile
+ :ensure t
+ :init
+ (projectile-global-mode))
+#+END_SRC
+
+** Asciidoc mode
+#+BEGIN_SRC emacs-lisp
+(use-package adoc-mode
+ :ensure t
+ :init
+ (add-to-list 'auto-mode-alist '("\\.doc$" . adoc-mode))
+ (add-to-list 'auto-mode-alist '("\\.asciidoc$" . adoc-mode)))
+#+END_SRC
+
+** IDO mode
+IDO lets you interactively do things with files and buffers.
+
+#+BEGIN_SRC emacs-lisp
+(setq ido-enable-flex-matching t
+      ido-everywhere t
+      ido-use-faces nil ;; disable ido faces to see flx highlights.
+      ido-create-new-buffer 'always)
+
+;; suppress  "reference to free variable problems"
+(setq ido-cur-item nil
+      ido-context-switch-command nil
+      ido-cur-list nil
+      ido-default-item nil)
+
+(ido-mode 1)
+
+(use-package ido-ubiquitous
+  :ensure t
+  :init
+  (ido-ubiquitous-mode 1))
+(use-package flx-ido
+  :ensure t
+  :init
+  (setq flx-ido-threshold 1000)
+  (flx-ido-mode 1))
+
+#+END_SRC
+
+** Protobuf
+#+BEGIN_SRC emacs-lisp
+(use-package protobuf-mode
+ :ensure t)
+#+END_SRC
+
+** Deft
+Deft setup - http://jblevins.org/projects/deft/
+#+BEGIN_SRC emacs-lisp
+(use-package deft
+ :ensure t
+ :init
+ (setq
+  deft-extension "org"
+  deft-directory "~/Notes/"
+  deft-text-mode 'org-mode))
+#+END_SRC
+
+** Appearance
+#+BEGIN_SRC emacs-lisp
+(use-package color-theme
+ :ensure t)
+
+; TODO - (require 'color-theme-ir-black)
+#+END_SRC
+** Paredit
+#+BEGIN_SRC emacs-lisp
+(use-package paredit
+ :ensure t
+ :init
 (defun conditionally-enable-paredit-mode ()
   "Enable `paredit-mode' in the minibuffer, during `eval-expression'."
   (if (eq this-command 'eval-expression)
       (paredit-mode 1)))
-(add-hook 'minibuffer-setup-hook 'conditionally-enable-paredit-mode)
-
-;; Projectile mode: https://github.com/bbatsov/projectile
-(projectile-global-mode)
-
-;; Flx-ido mode
-(require 'flx-ido)
-(ido-mode 1)
-(ido-everywhere 1)
-(flx-ido-mode 1)
-;; disable ido faces to see flx highlights.
-(setq ido-enable-flex-matching t)
-(setq ido-use-faces nil)
-
+(add-hook 'minibuffer-setup-hook 'conditionally-enable-paredit-mode))
+#+END_SRC
+** Dash
+https://github.com/stanaka/dash-at-point#readme
+#+BEGIN_SRC emacs-lisp
+(use-package dash-at-point
+ :ensure t
+ :bind (("\C-cd" . dash-at-point)))
+#+END_SRC
+** Other
+#+BEGIN_SRC emacs-lisp
+(require 'dired-x)
 
 ;; Hive / Hadoop
 (add-to-list 'auto-mode-alist '("\\.hql$" . sql-mode))
-
-(require 'protobuf-mode)
-
-;; Appearance
-(require 'color-theme)
-(require 'color-theme-ir-black)
-
-
-;; Deft setup - http://jblevins.org/projects/deft/
-(when (require 'deft nil 'noerror)
-  (setq
-   deft-extension "org"
-   deft-directory "~/Notes/"
-   deft-text-mode 'org-mode))
-
-;; Setup org-babel
-;; http://orgmode.org/org.html#Languages
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((emacs-lisp . t)
-   (R . t)
-   (ruby . t)
-   (sh . t)
-   (python . t)
-   (js . t)))
-
-;; dash-at-point
-;; https://github.com/stanaka/dash-at-point#readme
-(autoload 'dash-at-point "dash-at-point"
-  "Search the word at point with Dash." t nil)
-(global-set-key "\C-cd" 'dash-at-point)
-
-;; full screen magit-status
-;; http://whattheemacsd.com/setup-magit.el-01.html
-(when (require 'magit nil 'noerror)
-  (defadvice magit-status (around magit-fullscreen activate)
-    (window-configuration-to-register :magit-fullscreen)
-    ad-do-it
-    (delete-other-windows))
-
-  (defun magit-quit-session ()
-    "Restores the previous window configuration and kills the magit buffer"
-    (interactive)
-    (kill-buffer)
-    (jump-to-register :magit-fullscreen))
-
-  (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
-
 #+END_SRC
-** TODO Doc mode
 ** TODO Virtual env mode for Python
 * Development
 ** Flycheck
