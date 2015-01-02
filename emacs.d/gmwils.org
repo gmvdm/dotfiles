@@ -663,6 +663,21 @@ Turn on eldoc - http://emacswiki.org/emacs/ElDoc
 (add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Vagrantfile$" . ruby-mode))
 #+END_SRC
+*** Web mode
+#+BEGIN_SRC emacs-lisp
+(use-package web-mode
+  :ensure web-mode
+  :init (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+  :config
+  (progn
+    (setq web-mode-markup-indent-offset 2)
+    (setq web-mode-enable-auto-pairing t)
+    (setq web-mode-enable-current-element-highlight t)
+    (setq web-mode-ac-sources-alist
+          '(("css" . (ac-source-css-property))
+            ("html" . (ac-source-words-in-buffer ac-source-abbrev)))
+          )))
+#+END_SRC
 * Custom functions
 ** Auto commenting
 Lifted from the textmate package.
