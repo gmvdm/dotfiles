@@ -136,20 +136,25 @@ http://www.gnu.org/software/tramp/#Connection-types
 #+END_SRC
 
 ** Backup files
+Auto Save files to temp dir: http://emacswiki.org/emacs/AutoSave
 #+BEGIN_SRC emacs-lisp
-;; Auto Save files to temp dir
-;; http://emacswiki.org/emacs/AutoSave
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
+#+END_SRC
 
-;; Don't clutter up directories with files~
+Don't clutter up directories with files~
+#+BEGIN_SRC emacs-lisp
 (setq backup-directory-alist `(("." . ,(expand-file-name
                                         (concat dotfiles-dir "backups")))))
-;; Make backups of files, even when they're in version control
+#+END_SRC
+
+Make backups of files, even when they're in version control.
+#+BEGIN_SRC emacs-lisp
 (setq vc-make-backup-files t)
 #+END_SRC
+
 ** Mode line
 See: http://www.lunaryorn.com/2014/07/26/make-your-emacs-mode-line-more-useful.html
 #+BEGIN_SRC emacs-lisp
