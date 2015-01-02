@@ -151,14 +151,19 @@ Make backups of files, even when they're in version control.
 
 ** Mode line
 See: http://www.lunaryorn.com/2014/07/26/make-your-emacs-mode-line-more-useful.html
+
+
+More compact position display.
 #+BEGIN_SRC emacs-lisp
-;; More compact position display
 (setq-default mode-line-position
               '((-3 "%p") (size-indication-mode ("/" (-4 "%I")))
                 " "
                 (line-number-mode
                  ("%l" (column-number-mode ":%c")))))
+#+END_SRC
 
+Mode line formating for projectile.
+#+BEGIN_SRC emacs-lisp
 (defvar gmwils-projectile-mode-line
   '(:propertize
     (:eval (when (ignore-errors (projectile-project-root))
@@ -166,8 +171,10 @@ See: http://www.lunaryorn.com/2014/07/26/make-your-emacs-mode-line-more-useful.h
     face font-lock-constant-face)
   "Mode line format for Projectile.")
 (put 'gmwils-projectile-mode-line 'risky-local-variable t)
+#+END_SRC
 
-;; Shorter VC mode line
+Shorter version control (VC) mode line.
+#+BEGIN_SRC emacs-lisp
 (defvar gmwils-vc-mode-line
   '(" " (:propertize
          ;; Strip the backend name from the VC status information
@@ -176,7 +183,10 @@ See: http://www.lunaryorn.com/2014/07/26/make-your-emacs-mode-line-more-useful.h
          face font-lock-variable-name-face))
   "Mode line format for VC Mode.")
 (put 'gmwils-vc-mode-line 'risky-local-variable t)
+#+END_SRC
 
+Set the actual mode line.
+#+BEGIN_SRC emacs-lisp
 (setq-default mode-line-format
               '("%e" mode-line-front-space
                 mode-line-mule-info
