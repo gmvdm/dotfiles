@@ -144,12 +144,6 @@ Auto Save files to temp dir: http://emacswiki.org/emacs/AutoSave
       `((".*" ,temporary-file-directory t)))
 #+END_SRC
 
-Don't clutter up directories with files~
-#+BEGIN_SRC emacs-lisp
-(setq backup-directory-alist `(("." . ,(expand-file-name
-                                        (concat dotfiles-dir "backups")))))
-#+END_SRC
-
 Make backups of files, even when they're in version control.
 #+BEGIN_SRC emacs-lisp
 (setq vc-make-backup-files t)
