@@ -215,7 +215,13 @@ Set the actual mode line.
                 mode-line-misc-info
                 " "
                 mode-line-modes
+                battery-mode-line-string
                 mode-line-end-spaces))
+
+(display-battery-mode 1)
+(setq battery-mode-line-format "%p%%") ; Default: "[%b%p%%]"
+
+(diminish 'isearch-mode)
 #+END_SRC
 * Packages
 ** Smart tab
@@ -274,6 +280,7 @@ https://github.com/bbatsov/projectile
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
  :ensure t
+ :diminish projectile-mode
  :init
  (projectile-global-mode))
 #+END_SRC
@@ -614,11 +621,17 @@ Tutorial: https://github.com/serras/emacs-haskell-tutorial/blob/master/tutorial.
 ; XXX (require 'clojurescript-mode)
 (setq inferior-lisp-program "browser-repl")
 
-;; Turn on eldoc - http://emacswiki.org/emacs/ElDoc
+#+END_SRC
+**** Eldoc
+Turn on eldoc - http://emacswiki.org/emacs/ElDoc
+#+BEGIN_SRC emacs-lisp
+(autoload 'turn-on-eldoc-mode "eldoc" nil t)
+(diminish 'eldoc-mode)
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
 #+END_SRC
+
 *** PHP
 #+BEGIN_SRC emacs-lisp
 (setq auto-mode-alist (cons '("\\.php$" . php-mode) auto-mode-alist))
