@@ -17,25 +17,33 @@ inspiration!
 (setq debug-on-error t)
 #+END_SRC
 
-*** Other settings
+*** Turn of a range of things
 #+BEGIN_SRC emacs-lisp
-;; Turn off mouse interface early in startup to avoid momentary display
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
-(setq inhibit-startup-message t)
-
+(setq inhibit-startup-message t
+      inhibit-startup-echo-area-message t)
+#+END_SRC
+*** Sentances end with a single space
+#+BEGIN_SRC emacs-lisp
+(setq sentence-end-double-space nil)
+#+END_SRC
+*** Browser setup
+#+BEGIN_SRC emacs-lisp
 (setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "open"
-      custom-file (expand-file-name "~/.emacs.d/custom.el")
-      ido-handle-duplicate-virtual-buffers 2)
+      browse-url-generic-program "open")
 #+END_SRC
 *** Setup directories
 Make it easy to reference the dotfiles.
 #+BEGIN_SRC emacs-lisp
 (setq dotfiles-dir (file-name-directory
                     (or (buffer-file-name) load-file-name)))
+#+END_SRC
+*** Custom file
+#+BEGIN_SRC emacs-lisp
+(setq custom-file (expand-file-name "~/.emacs.d/custom.el"))
 #+END_SRC
 ** Enable package support
 I set up packages, Melpa, and use-package bright and early so that I can make
@@ -75,23 +83,6 @@ Reduce mode line clutter: http://www.emacswiki.org/emacs/DiminishedModes
     `(eval-after-load ,package-name
        '(defadvice ,mode (after rename-modeline activate)
           (setq mode-name ,new-name)))))
-#+END_SRC
-
-*** TODO Other package setup
-#+BEGIN_SRC emacs-lisp
-; TODO - setup packages
-(defvar my-packages '(clojure-mode clojure-test-mode
-                      markdown-mode yaml-mode tuareg
-		      color-theme magit deft
-		      paredit python-mode
-		      haskell-mode go-mode
-                      js2-mode
-                      ess flycheck projectile
-		      ;; ruby-mode inf-ruby
-		      scala-mode php-mode
-                      workgroups
-                      smart-tab protobuf-mode
-                      marmalade oddmuse scpaste))
 #+END_SRC
 
 * Emacs
@@ -241,6 +232,11 @@ Setup Yasnippet - http://github.com/capitaomorte/yasnippet
  (yas-global-mode 1))
 #+END_SRC
 
+** Markdown
+#+BEGIN_SRC emacs-lisp
+(use-package markdown-mode
+ :ensure t)
+#+END_SRC
 ** Git
 Setup full screen magit-status:
 http://whattheemacsd.com/setup-magit.el-01.html
@@ -280,7 +276,6 @@ https://github.com/bbatsov/projectile
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
  :ensure t
- :
  :init
  (projectile-global-mode))
 #+END_SRC
