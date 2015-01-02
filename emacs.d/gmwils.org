@@ -232,6 +232,13 @@ Setup Yasnippet - http://github.com/capitaomorte/yasnippet
  (yas-global-mode 1))
 #+END_SRC
 
+** Save place
+#+BEGIN_SRC emacs-lisp
+(use-package saveplace
+  :init
+  (setq-default save-place t)
+  (setq save-place-file (expand-file-name ".places" user-emacs-directory)))
+#+END_SRC
 ** Markdown
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode
