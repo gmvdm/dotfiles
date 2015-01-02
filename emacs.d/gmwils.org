@@ -280,7 +280,7 @@ https://github.com/bbatsov/projectile
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
  :ensure t
- :diminish projectile-mode
+ :
  :init
  (projectile-global-mode))
 #+END_SRC
@@ -606,10 +606,7 @@ Tutorial: https://github.com/serras/emacs-haskell-tutorial/blob/master/tutorial.
      (intern (concat (symbol-name x) "-mode"))
      '(("(\\|)" . 'esk-paren-face))))
   (add-hook
-   (intern (concat (symbol-name x) "-mode-hook")) 'turn-on-paredit)
-  ;; (add-hook
-   ;; (intern (concat (symbol-name x) "-mode-hook")) 'run-coding-hook)
-  )
+   (intern (concat (symbol-name x) "-mode-hook")) 'turn-on-paredit))
 
 (eval-after-load 'clojure-mode
   '(font-lock-add-keywords
@@ -618,9 +615,7 @@ Tutorial: https://github.com/serras/emacs-haskell-tutorial/blob/master/tutorial.
                                                (match-end 1) "ƒ")
                                nil))))))
 
-; XXX (require 'clojurescript-mode)
 (setq inferior-lisp-program "browser-repl")
-
 #+END_SRC
 **** Eldoc
 Turn on eldoc - http://emacswiki.org/emacs/ElDoc
