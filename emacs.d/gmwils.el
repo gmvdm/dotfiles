@@ -3,6 +3,9 @@
 ;;; Commentary:
 
 ;;; Code:
+;;; Personal settings
+(setq user-full-name "Geoff van der Meer"
+      user-mail-address "gmwils@gmail.com")
 
 ;;; Emacs settings:
 
