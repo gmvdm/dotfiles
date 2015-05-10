@@ -127,6 +127,15 @@ Set default file encoding to utf-8 (http://nakkaya.com/2009/11/29/emacs-and-inte
 (prefer-coding-system 'utf-8)
 #+END_SRC
 
+** Dired
+See: http://batsov.com/emacsredux/blog/2015/05/09/emacs-on-os-x/
+
+And on Mac, install: brew install coreutils
+#+BEGIN_SRC emacs-lisp
+(if (eq system-type 'darwin)
+ (setq insert-directory-program (executable-find "gls"))
+)
+#+END_SRC
 ** Tramp mode
 http://www.gnu.org/software/tramp/#Connection-types
 #+BEGIN_SRC emacs-lisp
