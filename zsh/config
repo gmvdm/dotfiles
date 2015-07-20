@@ -40,6 +40,9 @@ bindkey "\eOB" down-line-or-history
 
 zle -N newtab
 
+# Setup rbenv
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
 # Setup ssh-agent
 if [ ! -f $HOME/.ssh/agent ]
 then
