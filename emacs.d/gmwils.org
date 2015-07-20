@@ -233,6 +233,18 @@ Set the actual mode line.
  (global-smart-tab-mode 1))
 #+END_SRC
 
+** Avy - jump within buffers
+See:
+http://emacsredux.com/blog/2015/07/19/ace-jump-mode-is-dead-long-live-avy/
+
+#+BEGIN_SRC emacs-lisp
+(use-package avy
+ :ensure t
+ :bind
+ (("\C-cj" . avy-goto-word-or-subword-1)
+  ("\C-c:" . avy-goto-word-or-subword-1)
+  ("\S-w" . ace-window)))
+#+END_SRC
 ** YAS snippet
 Setup Yasnippet - http://github.com/capitaomorte/yasnippet
 #+BEGIN_SRC emacs-lisp
