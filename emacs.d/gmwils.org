@@ -866,6 +866,36 @@ From: http://emacsredux.com/blog/2013/05/04/rename-file-and-buffer/
 (global-set-key (kbd "C-x C-r") 'rename-file-and-buffer)
 #+END_SRC
 
+** Correct DOuble CAPS
+From:
+http://emacs.stackexchange.com/questions/13970/fixing-double-capitals-as-i-type/13975#13975
+
+#+BEGIN_SRC emacs-lisp
+  (defun dcaps-to-scaps ()
+    "Convert word in DOuble CApitals to Single Capitals."
+    (interactive)
+    (and (= ?w (char-syntax (char-before)))
+         (save-excursion
+           (and (if (called-interactively-p)
+                    (skip-syntax-backward "w")
+                  (= -3 (skip-syntax-backward "w")))
+                (let (case-fold-search)
+                  (looking-at "\\b[[:upper:]]\\{2\\}[[:lower:]]"))
+                (capitalize-word 1)))))
+
+  (add-hook 'post-self-insert-hook #'dcaps-to-scaps nil 'local)
+
+  (define-minor-mode dubcaps-mode
+    "Toggle `dubcaps-mode'. Converts words in DOuble CApitals to
+  Single Capitals as you type."
+    :init-value nil
+    :lighter (" DC")
+    (if dubcaps-mode
+        (add-hook 'post-self-insert-hook #'dcaps-to-scaps nil 'local)
+      (remove-hook 'post-self-insert-hook #'dcaps-to-scaps 'local)))
+
+  (add-hook 'text-mode-hook #'dubcaps-mode)
+#+END_SRC
 * Key bindings
 Key bindings that aren't included elsewhere.
 #+BEGIN_SRC emacs-lisp
