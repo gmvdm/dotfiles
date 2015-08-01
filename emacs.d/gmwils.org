@@ -99,6 +99,37 @@ http://orgmode.org/org.html#Languages
    (python . t)
    (js . t)))
 #+END_SRC
+*** YouTube links
+http://endlessparentheses.com/embedding-youtube-videos-with-org-mode-links.html
+
+Example: [[yt:A3JAlWM8qRM]]
+
+#+BEGIN_EXAMPLE
+[[yt:A3JAlWM8qRM]]
+#+END_EXAMPLE
+
+#+BEGIN_SRC emacs-lisp
+(defvar yt-iframe-format
+  ;; You may want to change your width and height.
+  (concat "<iframe width=\"440\""
+          " height=\"335\""
+          " src=\"https://www.youtube.com/embed/%s\""
+          " frameborder=\"0\""
+          " allowfullscreen>%s</iframe>"))
+
+(org-add-link-type
+ "yt"
+ (lambda (handle)
+   (browse-url
+    (concat "https://www.youtube.com/embed/"
+            handle)))
+ (lambda (path desc backend)
+   (cl-case backend
+     (html (format yt-iframe-format
+                   path (or desc "")))
+     (latex (format "\href{%s}{%s}"
+                    path (or desc "video"))))))
+#+END_SRC
 ** Scratch file
 See: http://emacsredux.com/blog/2014/07/25/configure-the-scratch-buffers-mode/
 #+BEGIN_SRC emacs-lisp
@@ -243,7 +274,7 @@ http://emacsredux.com/blog/2015/07/19/ace-jump-mode-is-dead-long-live-avy/
  :bind
  (("\C-cj" . avy-goto-word-or-subword-1)
   ("\C-c:" . avy-goto-word-or-subword-1)
-  ("\S-w" . ace-window)))
+  ("\C-cw" . ace-window)))
 #+END_SRC
 ** YAS snippet
 Setup Yasnippet - http://github.com/capitaomorte/yasnippet
