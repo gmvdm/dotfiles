@@ -40,6 +40,9 @@ bindkey "\eOB" down-line-or-history
 
 zle -N newtab
 
+# Init opam
+. /Users/gmwils/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
 # Setup rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
