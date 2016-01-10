@@ -5,6 +5,7 @@ Using [[http://orgmode.org/][org-mode]] for emacs config feels like cheating. Th
 inspiration!
 
 * Settings
+
 ** Personal information
 #+BEGIN_SRC emacs-lisp
 (setq user-full-name "Geoff van der Meer"
@@ -129,6 +130,20 @@ Example: [[yt:A3JAlWM8qRM]]
                    path (or desc "")))
      (latex (format "\href{%s}{%s}"
                     path (or desc "video"))))))
+#+END_SRC
+*** ispell
+Making ispell work in org-mode
+http://endlessparentheses.com/ispell-and-org-mode.html
+
+#+BEGIN_SRC emacs-lisp
+(defun endless/org-ispell ()
+  "Configure `ispell-skip-region-alist' for `org-mode'."
+  (make-local-variable 'ispell-skip-region-alist)
+  (add-to-list 'ispell-skip-region-alist '(org-property-drawer-re))
+  (add-to-list 'ispell-skip-region-alist '("~" "~"))
+  (add-to-list 'ispell-skip-region-alist '("=" "="))
+  (add-to-list 'ispell-skip-region-alist '("^#\\+BEGIN_SRC" . "^#\\+END_SRC")))
+(add-hook 'org-mode-hook #'endless/org-ispell)
 #+END_SRC
 ** Scratch file
 See: http://emacsredux.com/blog/2014/07/25/configure-the-scratch-buffers-mode/
@@ -317,7 +332,7 @@ http://whattheemacsd.com/setup-magit.el-01.html
    (kill-buffer)
    (jump-to-register :magit-fullscreen))
 
-  (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
+)
 #+END_SRC
 
 ** ESS
