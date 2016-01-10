@@ -43,6 +43,9 @@ zle -N newtab
 # Init opam
 . /Users/gmwils/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
+# Setup Julia
+export PATH="/Applications/Julia.app/Contents/Resources/julia/bin:$PATH"
+
 # Setup rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
