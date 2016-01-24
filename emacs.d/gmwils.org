@@ -157,6 +157,25 @@ See: http://emacsredux.com/blog/2014/07/25/configure-the-scratch-buffers-mode/
 (global-set-key "\C-c\C-w" 'whitespace-cleanup)
 #+END_SRC
 
+** Search for occurance of symbol at point
+C-s does normal search, C-u C-s will search for the current symbol that the
+cursor is on.
+
+See: http://endlessparentheses.com/quickly-search-for-occurrences-of-the-symbol-at-point.html
+
+#+BEGIN_SRC emacs-lisp
+(defun endless/isearch-symbol-with-prefix (p)
+  "Like isearch, unless prefix argument is provided.
+With a prefix argument P, isearch for the symbol at point."
+  (interactive "P")
+  (let ((current-prefix-arg nil))
+    (call-interactively
+     (if p #'isearch-forward-symbol-at-point
+       #'isearch-forward))))
+
+(global-set-key [remap isearch-forward]
+                #'endless/isearch-symbol-with-prefix)
+#+END_SRC
 ** Auto fill
 Always fill at 78 chars.
 #+BEGIN_SRC emacs-lisp
