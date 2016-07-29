@@ -19,10 +19,12 @@ set_color() {
 
   /usr/bin/osascript <<EOF
 tell application "iTerm"
-   tell current session of current terminal
-      set foreground color to {$FG_R, $FG_G, $FG_B}
-      set background color to {$BG_R, $BG_G, $BG_B}
-      set transparency to "$OPACITY"
+   tell the current window
+      tell current session
+         set foreground color to {$FG_R, $FG_G, $FG_B}
+         set background color to {$BG_R, $BG_G, $BG_B}
+         set transparency to "$OPACITY"
+      end tell
    end tell
 end tell
 EOF
