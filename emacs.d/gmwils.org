@@ -730,6 +730,10 @@ Turn on eldoc - http://emacswiki.org/emacs/ElDoc
 #+END_SRC
 *** Python
 #+BEGIN_SRC emacs-lisp
+(use-package python-mode
+ :ensure t
+ :init)
+
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.tac$" . python-mode) auto-mode-alist))
 (setq interpreter-mode-alist (cons '("python" . python-mode)
