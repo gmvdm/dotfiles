@@ -46,6 +46,21 @@ zle -N newtab
 # Setup Julia
 export PATH="/Applications/Julia.app/Contents/Resources/julia/bin:$PATH"
 
+# Setup Python
+# Pip to only use virtalenv - https://hackercodex.com/guide/python-development-environment-on-mac-osx/
+export PIP_REQUIRE_VIRTUALENV=true
+gpip(){
+   PIP_REQUIRE_VIRTUALENV="" pip "$@"
+}
+
+# Setup virtualenvwrapper
+export WORKON_HOME="~/.virtualenvs"
+if [ -f /usr/local/bin/virtualenvwrapper.sh ]
+then
+    source /usr/local/bin/virtualenvwrapper.sh
+    source /usr/local/opt/autoenv/activate.sh
+fi
+
 # Setup rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
