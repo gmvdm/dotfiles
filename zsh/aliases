@@ -18,7 +18,7 @@ alias ftp='/usr/bin/ftp -i'
 # emacs
 alias e='emacsclient -a ""'
 alias en='emacsclient -a "" -n'
-alias de='emacsclient -t --eval '\''(deft)'\'
+alias de='emacsclient -a "" -t --eval '\''(deft)'\'
 
 alias nt=nosetests
 alias ntv='nosetests -v'
