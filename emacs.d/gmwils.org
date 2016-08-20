@@ -598,8 +598,8 @@ Tutorial: https://github.com/serras/emacs-haskell-tutorial/blob/master/tutorial.
 (autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
-(autoload 'espresso-mode "espresso")
-(add-to-list 'auto-mode-alist '("\\.json$" . espresso-mode))
+(use-package json-mode
+ :ensure t)
 
 ;; Fix the crappy indentation of js2-mode
 (defun my-js2-indent-function ()
