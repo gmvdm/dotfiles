@@ -298,6 +298,32 @@ Set the actual mode line.
  (global-smart-tab-mode 1))
 #+END_SRC
 
+** String Inflection
+Change case styles: https://github.com/akicho8/string-inflection
+
+#+BEGIN_SRC emacs-lisp
+(use-package string-inflection
+ :ensure t)
+
+(global-unset-key (kbd "C-q"))
+;; C-q C-u is the key bindings similar to Vz Editor.
+(global-set-key (kbd "C-q C-u") 'my-string-inflection-cycle-auto)
+
+(defun my-string-inflection-cycle-auto ()
+  "switching by major-mode"
+  (interactive)
+  (cond
+   ;; for emacs-lisp-mode
+   ((eq major-mode 'emacs-lisp-mode)
+    (string-inflection-all-cycle))
+   ;; for java
+   ((eq major-mode 'java-mode)
+    (string-inflection-java-style-cycle))
+   (t
+    ;; default
+    (string-inflection-ruby-style-cycle))))
+
+#+END_SRC
 ** Avy - jump within buffers
 See:
 http://emacsredux.com/blog/2015/07/19/ace-jump-mode-is-dead-long-live-avy/
