@@ -8,12 +8,16 @@ alias ls='ls -FG'
 alias lls='ls -la'
 alias ll='ls -l'
 alias la='ls -A'
-
 alias tf='tail -f'
-alias ips='ifconfig | grep "inet "'
-alias hugs=ghci
 alias cpan='sudo perl -MCPAN -e shell'
+
+# network (http://randsinrepose.com/links/2016/10/16/nesting-and-networking/)
+alias netwtf='sudo /usr/local/Cellar/mtr/0.86/sbin/mtr -n 8.8.8.8'
+alias ips='ifconfig | grep "inet "'
 alias ftp='/usr/bin/ftp -i'
+alias nslookup='nslookup -sil'
+alias ni='netstat -f inet'
+alias t=telnet
 
 # emacs
 alias e='emacsclient -a ""'
@@ -25,14 +29,8 @@ alias ntv='nosetests -v'
 
 alias libtool=/usr/bin/glibtool
 
-alias nslookup='nslookup -sil'
-
 alias l="$PAGER"
 alias lst='last -10'
-
-alias ni='netstat -f inet'
-
-alias t=telnet
 
 # tags
 alias runtags='find . -name '\''*.cc'\'' -or -name '\''*.cc'\'' | xargs etags --lang=c++'
