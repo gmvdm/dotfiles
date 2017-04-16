@@ -145,6 +145,18 @@ http://endlessparentheses.com/ispell-and-org-mode.html
   (add-to-list 'ispell-skip-region-alist '("^#\\+BEGIN_SRC" . "^#\\+END_SRC")))
 (add-hook 'org-mode-hook #'endless/org-ispell)
 #+END_SRC
+** Mac Settings
+#+BEGIN_SRC emacs-lisp
+(when (eq system-type 'darwin)
+  (set-default-font "-*-Menlo-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+  ;; initial window
+  (setq initial-frame-alist '((width . 120) (height . 50)))
+  ;; defaults subsequent windows
+  (setq default-frame-alist '((width . 120) (height . 50)))
+
+  (load-theme 'tango-dark)
+)
+#+END_SRC
 ** Scratch file
 See: http://emacsredux.com/blog/2014/07/25/configure-the-scratch-buffers-mode/
 #+BEGIN_SRC emacs-lisp
