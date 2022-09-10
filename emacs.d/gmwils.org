@@ -1,4 +1,4 @@
-#+TITLE: Geoff van der Meer's Emacs configuration
++TITLE: Geoff van der Meer's Emacs configuration
 #+OPTIONS: toc:4 h:4
 * Introduction
 Using [[http://orgmode.org/][org-mode]] for emacs config feels like cheating. Thanks [[https://github.com/mwfogleman/config/blob/master/home/.emacs.d/michael.org][Michael]] for the
@@ -47,33 +47,6 @@ Make it easy to reference the dotfiles.
 (setq custom-file (expand-file-name "~/.emacs.d/custom.el"))
 #+END_SRC
 ** Enable package support
-I set up packages, Melpa, and use-package bright and early so that I can make
-use of use-package's bind-key macro.
-
-When I first copy this set-up into a new machine, I still have to require
-package, add MELPA, initialize package, and grab use-package, and a couple of
-others from the package archives and the internet. This could be improved.
-
-#+BEGIN_SRC emacs-lisp
-(require 'package)
-
-(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
-                         ("gnu" . "http://elpa.gnu.org/packages/")
-                         ("org" . "http://orgmode.org/elpa/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")))
-(package-initialize)
-(setq load-prefer-newer t)
-(require 'use-package) ;; currently you have to evaluate everything up to here, and grab use-package manually :/
-#+END_SRC
-*** Paradox
-#+BEGIN_SRC emacs-lisp
-  (use-package paradox
-    :ensure t
-    :config
-    (setq paradox-execute-asynchronously t))
-#+END_SRC
-
 *** Diminish
 Reduce mode line clutter: http://www.emacswiki.org/emacs/DiminishedModes
 #+BEGIN_SRC emacs-lisp
@@ -96,7 +69,7 @@ http://orgmode.org/org.html#Languages
  '((emacs-lisp . t)
    (R . t)
    (ruby . t)
-   (sh . t)
+   (shell . t)
    (python . t)
    (js . t)))
 #+END_SRC
@@ -148,7 +121,7 @@ http://endlessparentheses.com/ispell-and-org-mode.html
 ** Mac Settings
 #+BEGIN_SRC emacs-lisp
 (when (eq system-type 'darwin)
-  (set-default-font "-*-Menlo-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+  (set-frame-font "-*-Menlo-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
   ;; initial window
   (setq initial-frame-alist '((width . 120) (height . 50)))
   ;; defaults subsequent windows
@@ -358,13 +331,6 @@ Setup Yasnippet - http://github.com/capitaomorte/yasnippet
  (yas-global-mode 1))
 #+END_SRC
 
-** Save place
-#+BEGIN_SRC emacs-lisp
-(use-package saveplace
-  :init
-  (setq-default save-place t)
-  (setq save-place-file (expand-file-name ".places" user-emacs-directory)))
-#+END_SRC
 ** Markdown
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode
@@ -442,7 +408,7 @@ IDO lets you interactively do things with files and buffers.
 
 (ido-mode 1)
 
-(use-package ido-ubiquitous
+(use-package ido-completing-read+
   :ensure t
   :init
   (ido-ubiquitous-mode 1))
@@ -474,10 +440,6 @@ Deft setup - http://jblevins.org/projects/deft/
 
 ** Appearance
 #+BEGIN_SRC emacs-lisp
-(use-package color-theme
- :ensure t)
-
-; TODO - (require 'color-theme-ir-black)
 #+END_SRC
 ** Paredit
 #+BEGIN_SRC emacs-lisp
