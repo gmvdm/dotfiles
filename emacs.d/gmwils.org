@@ -980,39 +980,53 @@ http://emacs.stackexchange.com/questions/13970/fixing-double-capitals-as-i-type/
 * Key bindings
 Key bindings that aren't included elsewhere.
 #+BEGIN_SRC emacs-lisp
-(progn
-  ;; Font size
-  (define-key global-map (kbd "C-+") 'text-scale-increase)
-  (define-key global-map (kbd "C--") 'text-scale-decrease)
+  (progn
 
-  ;; Use regex searches by default.
-  (global-set-key (kbd "C-s") 'isearch-forward-regexp)
-  (global-set-key (kbd "\C-r") 'isearch-backward-regexp)
-  (global-set-key (kbd "C-M-s") 'isearch-forward)
-  (global-set-key (kbd "C-M-r") 'isearch-backward)
+    ;; From Steve Yegge https://www.youtube.com/watch?v=6ZWp05OW1c0
+    (global-set-key "\C-xe" 'end-of-buffer) ; was 'kmacro-end-and-call-macro
+    (global-set-key "\C-xt" 'beginning-of-buffer) ; was undefined
+    (global-set-key "\C-w" 'backward-kill-word) ; was 'kill-region
+    (global-set-key "\C-x\C-k" 'kill-region) ; was 'kmacro-keymap
+    (global-set-key "\C-c\C-k" 'kill-region) ; was undefined
+    (global-set-key "\C-xi" 'info) ; was 'insert-file
+    (global-set-key "\C-c\C-c" 'comment-region) ; was 'help-follow-symbol
+    (global-set-key "\C-c\C-u" 'uncomment-region) ; was undefined
 
-  ;; M-S-6 is awkward
-  (global-set-key (kbd "C-c q") 'join-line)
-  (global-set-key (kbd "M-j")
-            (lambda ()
-                  (interactive)
-                  (join-line -1)))
+    (global-set-key "\C-xc" 'compile) ; was undefined
+    (global-set-key "\C-cc" 'compile) ; was undefined
+
+    ;; Font size
+    (define-key global-map (kbd "C-+") 'text-scale-increase)
+    (define-key global-map (kbd "C--") 'text-scale-decrease)
+
+    ;; Use regex searches by default.
+    (global-set-key (kbd "C-s") 'isearch-forward-regexp)
+    (global-set-key (kbd "\C-r") 'isearch-backward-regexp)
+    (global-set-key (kbd "C-M-s") 'isearch-forward)
+    (global-set-key (kbd "C-M-r") 'isearch-backward)
+
+    ;; M-S-6 is awkward
+    (global-set-key (kbd "C-c q") 'join-line)
+    (global-set-key (kbd "M-j")
+              (lambda ()
+                    (interactive)
+                    (join-line -1)))
 
 
-  ;; Cycle between windows - https://github.com/garybernhardt/dotfiles/blob/master/.emacs
-  (global-set-key (kbd "C-o") 'other-window)
-  (defun prev-window ()
-    (interactive)
-    (other-window -1))
-  (global-set-key "\M-o" 'prev-window)
+    ;; Cycle between windows - https://github.com/garybernhardt/dotfiles/blob/master/.emacs
+    (global-set-key (kbd "C-o") 'other-window)
+    (defun prev-window ()
+      (interactive)
+      (other-window -1))
+    (global-set-key "\M-o" 'prev-window)
 
-  ;; Help should search more than just commands
-  (global-set-key (kbd "C-h a") 'apropos)
+    ;; Help should search more than just commands
+    (global-set-key (kbd "C-h a") 'apropos)
 
-  (global-set-key (kbd "C-x m") 'magit-status)
-  (global-set-key (kbd "M-s")   'fixup-whitespace)
+    (global-set-key (kbd "C-x m") 'magit-status)
+    (global-set-key (kbd "M-s")   'fixup-whitespace)
 
-  ;; Toggle auto-fill
-  (global-set-key (kbd "C-c q") 'auto-fill-mode)
-)
+    ;; Toggle auto-fill
+    (global-set-key (kbd "C-c q") 'auto-fill-mode)
+  )
 #+END_SRC
