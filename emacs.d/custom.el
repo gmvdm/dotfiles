@@ -8,7 +8,20 @@
  '(haskell-process-suggest-remove-import-lines t)
  '(haskell-process-type 'cabal-repl)
  '(haskell-tags-on-save t)
- '(package-selected-packages '(smart-tab use-package diminish)))
+ '(package-selected-packages '(smart-tab use-package diminish))
+ '(warning-suppress-log-types
+   '(((package reinitialization))
+     ((package reinitialization))
+     ((package reinitialization))
+     ((package reinitialization))
+     ((package reinitialization))
+     ((package reinitialization))))
+ '(warning-suppress-types
+   '(((package reinitialization))
+     ((package reinitialization))
+     ((package reinitialization))
+     ((package reinitialization))
+     ((package reinitialization)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

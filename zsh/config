@@ -43,8 +43,6 @@ zle -N newtab
 # Init opam
 . /Users/gmwils/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
-# Setup Julia
-export PATH="/Applications/Julia.app/Contents/Resources/julia/bin:$PATH"
 
 # Setup Python
 # Pip to only use virtalenv - https://hackercodex.com/guide/python-development-environment-on-mac-osx/
@@ -55,9 +53,9 @@ gpip(){
 
 # Setup virtualenvwrapper
 export WORKON_HOME="~/.virtualenvs"
-if [ -f /usr/local/bin/virtualenvwrapper.sh ]
+if [ -f /tmp/usr/local/Homebrew/bin/virtualenvwrapper.sh ]
 then
-    source /usr/local/bin/virtualenvwrapper.sh
+    source /usr/local/Homebrew/bin/virtualenvwrapper.sh
     source /usr/local/opt/autoenv/activate.sh
 fi
 
