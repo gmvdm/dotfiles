@@ -55,7 +55,8 @@ gpip(){
 export WORKON_HOME="~/.virtualenvs"
 if [ -f /opt/homebrew/bin/virtualenvwrapper.sh ]
 then
-    source /opt/homebrew/bin/virtualenvwrapper.sh
+    source /opt/homebrew/bin/virtualenvwrapper.sh # virtualenvwrapper setup
+    source /opt/homebrew/opt/autoenv/activate.sh # autoenv setup
 fi
 
 # Setup rbenv
